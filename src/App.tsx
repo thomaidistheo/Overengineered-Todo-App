@@ -4,7 +4,7 @@ import Homepage from './pages/Homepage/Homepage'
 import LoginPage from './pages/Login/LoginPage'
 import React, { useState } from 'react'
 import './firebase'
-import { AuthProvider } from './AuthContext'
+// import { AuthProvider } from './AuthContext'
 import { auth } from './firebase'
 import { User } from 'firebase/auth'
 
@@ -26,7 +26,7 @@ function App() {
     <>
       {isLoading 
       ? <h1>loading</h1>
-      : <AuthProvider> 
+      : 
           <Router>
             <Routes>
               <Route path="/" element={user ? <Homepage /> : <LoginPage />} />
@@ -34,7 +34,6 @@ function App() {
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Router>
-        </AuthProvider>
       }
     </>
   );
