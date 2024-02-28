@@ -1,24 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import { db } from '../../firebase' // Ensure this points to your Firebase config file
-import { collection, addDoc, query, onSnapshot, doc, updateDoc, getFirestore, deleteDoc } from 'firebase/firestore'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom' 
+import { Firestore, collection, addDoc, query, onSnapshot, doc, updateDoc, getFirestore, deleteDoc, Timestamp } from 'firebase/firestore'
 import { useAuth } from '../../AuthContext'
 import SignOut from '../../components/SignoutBtn/SignoutBtn'
 
+const db: Firestore = getFirestore()
+
+interface Task {
+    id: string
+    description: string
+    completed: boolean
+    flag: boolean
+    urgency: string
+    timestamp: Timestamp
+}
+
 const Homepage = () => {
     const { user } = useAuth()
-    const [tasks, setTasks] = useState<any[]>([])
+    const [tasks, setTasks] = useState<Task[]>([])
     const [description, setDescription] = useState('')
     const [urgency, setUrgency] = useState('Low')
     const [flag, setFlag] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (user) {
             const q = query(collection(db, "Users", user.uid, "Tasks"))
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const tasksArray = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
+                const tasksArray: Task[] = querySnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    // Assume data has the structure you expect and cast types as necessary
+                    return {
+                        id: doc.id,
+                        description: data.description,
+                        completed: data.completed,
+                        flag: data.flag,
+                        urgency: data.urgency,
+                        timestamp: data.timestamp,
+                        } as Task;
+                    });
                 setTasks(tasksArray)
             })
 
@@ -27,24 +48,52 @@ const Homepage = () => {
     }, [user])
 
     const addTask = async () => {
-        if (!description) return
-        await addDoc(collection(db, "Users", user?.uid, "Tasks"), {
-            description,
-            completed: false,
-            flag,
-            timestamp: new Date(),
-            urgency
-        })
-        setDescription('')
-        setFlag(false)
-        setUrgency('Low')
-    }
 
-    const deleteTask = async (taskId) => {
-        const db = getFirestore()
+        if (!description) {
+            console.log('Add a description')
+            return
+        }
 
         try {
-            await deleteDoc(doc(db, "Users", user?.uid, "Tasks", taskId))
+            if (!user) {
+                console.log('User is not authenticated')
+                navigate('/login')
+                return
+            } 
+
+            const taskCollectionRef = collection(db, "Users", user?.uid, "Tasks")
+            await addDoc(taskCollectionRef, {
+                description,
+                completed: false,
+                flag,
+                timestamp: new Date(),
+                urgency
+            })
+
+            setDescription('')
+            setFlag(false)
+            setUrgency('Low')
+        } catch (error: unknown) {
+            if (typeof error == "object" && error !== null && "message" in error) {
+                const errorMessage = (error as { message: string }).message
+                console.log(errorMessage)
+            } else {
+                console.log("An unexpected error occured - Google Signup - 001")
+            }
+        }
+    }
+
+    const deleteTask = async (taskId: string) => {
+
+        try {
+            if (!user) {
+                console.log('User is not authenticated')
+                navigate('/login')
+                return
+            }
+
+            const taskDocRef =  doc(db, "Users", user?.uid, "Tasks", taskId)
+            await deleteDoc(taskDocRef)
             console.log('task deleted')
         } catch (error) {
             console.log('Error deleting task: ', error)
@@ -52,6 +101,11 @@ const Homepage = () => {
     }
 
     const toggleComplete = async (taskId: string, completed: boolean) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        } 
         const taskDocRef = doc(db, "Users", user.uid, "Tasks", taskId)
         await updateDoc(taskDocRef, {
             completed: !completed
@@ -59,6 +113,11 @@ const Homepage = () => {
     }
 
     const toggleFlag = async (taskId: string, flag: boolean) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        } 
         const taskDocRef = doc(db, "Users", user.uid, "Tasks", taskId)
         await updateDoc(taskDocRef, {
             flag: !flag
@@ -66,12 +125,12 @@ const Homepage = () => {
     }
 
     // Sort tasks based on date added
-    let compare = (a, b) => {
+    const compare = (a: Task, b: Task) => {
         if (a.timestamp.toDate().toLocaleString() < b.timestamp.toDate().toLocaleString()) {
-            return 1;
+            return 1
         }         
         if (a.timestamp.toDate().toLocaleString() > b.timestamp.toDate().toLocaleString()) {
-            return -1;
+            return -1
         }
         return 0
     }
