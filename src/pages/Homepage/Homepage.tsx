@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom' 
-import { Firestore, collection, addDoc, query, onSnapshot, doc, updateDoc, getFirestore, deleteDoc, Timestamp } from 'firebase/firestore'
+import { Firestore, collection, query, onSnapshot, getFirestore, Timestamp } from 'firebase/firestore'
 import { useAuth } from '../../AuthContext'
 import SignOut from '../../components/SignoutBtn/SignoutBtn'
+import TaskList from '../../components/TaskList/TaskList'
+import Task from '../../components/Task/Task'
+
+import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations';
 
 const db: Firestore = getFirestore()
 
@@ -21,6 +25,7 @@ const Homepage = () => {
     const [description, setDescription] = useState('')
     const [urgency, setUrgency] = useState('Low')
     const [flag, setFlag] = useState(false)
+    const [descriptionError, setDescriptionError] = useState('');
 
     const navigate = useNavigate()
 
@@ -29,8 +34,7 @@ const Homepage = () => {
             const q = query(collection(db, "Users", user.uid, "Tasks"))
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const tasksArray: Task[] = querySnapshot.docs.map((doc) => {
-                    const data = doc.data();
-                    // Assume data has the structure you expect and cast types as necessary
+                    const data = doc.data()
                     return {
                         id: doc.id,
                         description: data.description,
@@ -38,8 +42,8 @@ const Homepage = () => {
                         flag: data.flag,
                         urgency: data.urgency,
                         timestamp: data.timestamp,
-                        } as Task;
-                    });
+                        } as Task
+                    })
                 setTasks(tasksArray)
             })
 
@@ -47,81 +51,81 @@ const Homepage = () => {
         }
     }, [user])
 
-    const addTask = async () => {
-
-        if (!description) {
-            console.log('Add a description')
+    const handleAddTask = async () => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
             return
         }
 
-        try {
-            if (!user) {
-                console.log('User is not authenticated')
-                navigate('/login')
-                return
-            } 
-
-            const taskCollectionRef = collection(db, "Users", user?.uid, "Tasks")
-            await addDoc(taskCollectionRef, {
-                description,
-                completed: false,
-                flag,
-                timestamp: new Date(),
-                urgency
-            })
-
-            setDescription('')
-            setFlag(false)
-            setUrgency('Low')
-        } catch (error: unknown) {
-            if (typeof error == "object" && error !== null && "message" in error) {
-                const errorMessage = (error as { message: string }).message
-                console.log(errorMessage)
-            } else {
-                console.log("An unexpected error occured - Google Signup - 001")
-            }
+        if (description.trim() === '') {
+            setDescriptionError('Description cannot be empty')
+            return;
+        } else {
+            setDescriptionError('')
         }
-    }
-
-    const deleteTask = async (taskId: string) => {
 
         try {
-            if (!user) {
-                console.log('User is not authenticated')
-                navigate('/login')
-                return
-            }
-
-            const taskDocRef =  doc(db, "Users", user?.uid, "Tasks", taskId)
-            await deleteDoc(taskDocRef)
-            console.log('task deleted')
+            await addTask(db, user, description, flag, urgency)
         } catch (error) {
-            console.log('Error deleting task: ', error)
+            console.log('Error adding new task: ', error)
         }
     }
 
-    const toggleComplete = async (taskId: string, completed: boolean) => {
+    const handleDeleteTask = async (taskId: string) => {
         if (!user) {
             console.log('User is not authenticated')
             navigate('/login')
             return
-        } 
-        const taskDocRef = doc(db, "Users", user.uid, "Tasks", taskId)
-        await updateDoc(taskDocRef, {
-            completed: !completed
-        })
+        }
+
+        try {
+            await deleteTask(db, user, taskId);
+        } catch (error) {
+            console.error('Error deleting task:', error)
+        }
     }
 
-    const toggleFlag = async (taskId: string, flag: boolean) => {
+    const handleComplete = async (taskId: string, completed: boolean) => {
         if (!user) {
             console.log('User is not authenticated')
             navigate('/login')
             return
         } 
-        const taskDocRef = doc(db, "Users", user.uid, "Tasks", taskId)
-        await updateDoc(taskDocRef, {
-            flag: !flag
-        })
+        
+        try {
+            await toggleComplete(db, user, taskId, completed)
+        } catch (error) {
+            console.error('Error modifying completion state of task:', error)
+        }
+    }
+
+    const handleFlag = async (taskId: string, flag: boolean) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        }
+
+        try { 
+            await toggleFlag(db, user, taskId, flag)
+        } catch (error) {
+            console.log('Error modifying flag state of task: ', error)
+        }
+    }
+
+    const handleChangeUrgency = async (taskId: string, newUrgency: string) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        }
+
+        try { 
+            await changeUrgency(db, user, taskId, newUrgency)
+        } catch (error) {
+            console.log('Error modifying flag state of task: ', error)
+        }
     }
 
     // Sort tasks based on date added
@@ -137,14 +141,17 @@ const Homepage = () => {
     tasks.sort(compare)
 
     return (
-        <div>
-            <h1>Todo List</h1>
+        <>
             <input
                 type="text"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                    (descriptionError) ? setDescriptionError('') : ''
+                    setDescription(e.target.value)
+                }}
                 placeholder="Add a new task"
             />
+            {(descriptionError && <span style={{ color: 'red' }}>{descriptionError}</span>)}
             <select value={urgency} onChange={(e) => setUrgency(e.target.value)}>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
@@ -157,21 +164,16 @@ const Homepage = () => {
                     onChange={(e) => setFlag(e.target.checked)}
                 /> Flag
             </label>
-            <button onClick={addTask}>Add Task</button>
-
-            <ul>
-                {tasks.map(task => (
-                    <li key={task.id}>
-                        {task.description} - {task.urgency} - {task.completed ? 'Completed' : 'Pending'} - {task.flag ? 'Flagged' : 'Not Flagged'}
-                        <button onClick={() => toggleComplete(task.id, task.completed)}>Toggle Complete</button>
-                        <button onClick={() => toggleFlag(task.id, task.flag)}>Toggle Flag</button>
-                        <button onClick={() => deleteTask(task.id)}>Delete</button>
-                        {task.timestamp.toDate().toLocaleString()}
-                    </li>
-                ))}
-            </ul>
+            <button onClick={handleAddTask}>Add Task</button>
+            <TaskList
+                tasks={tasks}
+                onToggleComplete={handleComplete}
+                onToggleFlag={handleFlag}
+                onUrgencyChange={handleChangeUrgency}
+                onDeleteTask={handleDeleteTask}
+            />
             <SignOut />
-        </div>
+        </>
     )
 }
 
