@@ -67,6 +67,7 @@ const Homepage = () => {
 
         try {
             await addTask(db, user, description, flag, urgency)
+            setDescription('')
         } catch (error) {
             console.log('Error adding new task: ', error)
         }
