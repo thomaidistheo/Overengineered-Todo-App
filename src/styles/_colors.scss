@@ -1,11 +1,17 @@
+html {
+    color-scheme: light dark auto;
+}
+
 $white-100: #FFFFFF;
 $white-60: rgba(255, 255, 255, 0.6);
 $white-30: rgba(255, 255, 255, 0.3);
 $white-10: rgba(255, 255, 255, 0.1);
 
 $clrPrimary: #0A0A0A;
-$clrSecondary: #202020;
+$clrSecondary: #111111;
 $clrTertiary: #333333; 
 
 $clrWarning: orange;
+$clrError-50: #FFE9EE;
+$clrError-100: #DE5476;
 $clrError: red;

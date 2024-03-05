@@ -2,11 +2,11 @@
 
 .taskItem {
     width: 100%;
-    background-color: $clrPrimary;
+    background-color: $clrSecondary;
     color: $white-60;
     max-width: 520px;
     padding: 8px 16px;
-    border: 1px solid $clrSecondary;
+    border: 1px solid $clrTertiary;
     border-radius: $borderRadiusNormal;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     @include displayFlex(column, flex-start, center, 4px);
@@ -54,8 +54,8 @@
             .flagIcon,
             .deleteIcon,
             .urgencyIcon {
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 cursor: pointer;
                 border-radius: $borderRadiusSmall;
                 @include displayFlex(row, center, center, 0px);
@@ -68,8 +68,8 @@
                 }
 
                 svg {
-                    height: 18px;
-                    width: 18px;
+                    height: 24px;
+                    width: 24px;
                     color: $white-30;
                 }
 

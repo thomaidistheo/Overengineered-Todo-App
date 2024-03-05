@@ -6,6 +6,7 @@ import SignOut from '../../components/SignoutBtn/SignoutBtn'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
 import InputTask from '../../components/InputTask/InputTask'
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'
 
 import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
 
@@ -25,9 +26,11 @@ interface Task {
 const Homepage = () => {
     const { user } = useAuth()
     const [tasks, setTasks] = useState<Task[]>([])
-    const [description, setDescription] = useState('')
-    const [descriptionError, setDescriptionError] = useState('')
-
+    const [description, setDescription] = useState("")
+    const [descriptionError, setDescriptionError] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
+    const [modalTitle, setModalTitle] = useState<string>("Delete Task?")
 
     const navigate = useNavigate()
 
@@ -75,7 +78,7 @@ const Homepage = () => {
         }
     }
 
-    const handleDeleteTask = async (taskId: string) => {
+    const handleDeleteTaskFunc = async (taskToDelete: string) => {
         if (!user) {
             console.log('User is not authenticated')
             navigate('/login')
@@ -83,10 +86,27 @@ const Homepage = () => {
         }
 
         try {
-            await deleteTask(db, user, taskId)
+            await deleteTask(db, user, taskToDelete)
         } catch (error) {
             console.error('Error deleting task:', error)
         }
+    }
+
+    const confirmDeleteTask = async () => {
+        if (taskToDelete) {
+            handleDeleteTaskFunc(taskToDelete)
+        }
+        setIsModalOpen(false);
+    }
+
+    const handleDeleteTask = (taskId: string) => {
+        setTaskToDelete(taskId)
+        setModalTitle('Delete task?')
+        setIsModalOpen(true)
+    }
+    
+    const cancelDeleteTask = () => {
+        setIsModalOpen(false)
     }
 
     const handleComplete = async (taskId: string, completed: boolean) => {
@@ -146,6 +166,12 @@ const Homepage = () => {
     return (
         <div className={styles.homepage}>
             <SignOut />
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onConfirm={confirmDeleteTask}
+                onCancel={cancelDeleteTask}
+                modalTitle={modalTitle}
+            />
             <TaskList
                 tasks={tasks}
                 onToggleComplete={handleComplete}

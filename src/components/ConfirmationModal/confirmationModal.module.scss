@@ -1,0 +1,47 @@
+@import '../../styles/imports';
+
+.confirmationModalCont {
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    @include displayFlex(column, center, center, 0);
+    padding: 0 8px;
+
+    .confirmationModal {
+        width: 100%;
+        max-width: 520px;
+        border: 1px solid $clrTertiary;
+        border-radius: $borderRadiusNormal;
+        background-color: $clrSecondary;
+        padding: 32px;
+        @include displayFlex(column, flex-start, center, 64px);
+
+        @media (max-width: $mobile) {
+            padding: 16px;
+        }
+
+        .modalTitle {
+            font-size: $fontSizeBigger;
+            line-height: 32px;
+            font-weight: 400;
+            color: $white-60;
+
+            @media (max-width: $mobile) {
+                font-size: 18px;
+            }
+        }
+
+        .options {
+            @include displayFlex(column, flex-start, center, 16px);
+            width: 100%;
+
+            @media (max-width: $mobile) {
+                @include displayFlex(column, flex-start, center, 8px);
+            }
+        }
+    }
+}

@@ -51,7 +51,8 @@
             border-radius: $borderRadiusSmall;
             transition: background-color 150ms ease-in-out;
             cursor: pointer;
-    
+            padding: 4px;
+            
             &:hover {
                 background-color: $white-30;
             }
