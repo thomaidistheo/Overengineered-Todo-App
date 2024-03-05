@@ -1,18 +1,19 @@
 import Task from '../Task/Task'
 import { Task as TaskType } from '../../types'
+import styles from './taskList.module.scss'
 
 interface TaskListProps {
-    tasks: TaskType[];
-    onToggleComplete: (taskId: string, completed: boolean) => void;
-    onToggleFlag: (taskId: string, flag: boolean) => void;
-    onUrgencyChange: (taskId: string, newUrgency: string) => void;
-    onDeleteTask: (taskId: string) => void;
+    tasks: TaskType[]
+    onToggleComplete: (taskId: string, completed: boolean) => void
+    onToggleFlag: (taskId: string, flag: boolean) => void
+    onUrgencyChange: (taskId: string, newUrgency: string) => void
+    onDeleteTask: (taskId: string) => void
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete, onToggleFlag, onUrgencyChange, onDeleteTask }) => {
     return (
-        <div>
-            <ul>
+        <div className={styles.taskList}>
+            <ul className={styles.tasks}>
                 {tasks.map(task => (
                     <Task 
                         key={task.id}

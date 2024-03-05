@@ -1,0 +1,10 @@
+@import '../../styles/imports';
+
+.taskList {
+    width: 100%;
+    max-width: 520px;
+
+    .tasks {
+        @include displayFlex(column, center, flex-start, 16px);
+    }
+}

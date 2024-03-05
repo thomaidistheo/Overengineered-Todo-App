@@ -8,6 +8,7 @@ import { AuthProvider } from './AuthContext'
 import { auth } from './firebase'
 import { User } from 'firebase/auth'
 
+import styles from './app.module.scss';
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -23,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className={styles.app}>
       {isLoading 
       ? <h1>loading</h1>
       : <AuthProvider> 
@@ -36,7 +37,7 @@ function App() {
           </Router>
         </AuthProvider>
       }
-    </>
+    </div>
   );
 }
 

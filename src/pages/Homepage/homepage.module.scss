@@ -1,0 +1,8 @@
+@import '../../styles/imports';
+
+.homepage {
+    width: 100%;
+
+    @include displayFlex(column, center, center, 32px);
+
+}

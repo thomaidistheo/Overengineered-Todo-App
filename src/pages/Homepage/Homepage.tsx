@@ -6,7 +6,9 @@ import SignOut from '../../components/SignoutBtn/SignoutBtn'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
 
-import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations';
+import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
+
+import styles from './homepage.module.scss'
 
 const db: Firestore = getFirestore()
 
@@ -23,9 +25,7 @@ const Homepage = () => {
     const { user } = useAuth()
     const [tasks, setTasks] = useState<Task[]>([])
     const [description, setDescription] = useState('')
-    const [urgency, setUrgency] = useState('Low')
-    const [flag, setFlag] = useState(false)
-    const [descriptionError, setDescriptionError] = useState('');
+    const [descriptionError, setDescriptionError] = useState('')
 
     const navigate = useNavigate()
 
@@ -60,13 +60,13 @@ const Homepage = () => {
 
         if (description.trim() === '') {
             setDescriptionError('Description cannot be empty')
-            return;
+            return
         } else {
             setDescriptionError('')
         }
 
         try {
-            await addTask(db, user, description, flag, urgency)
+            await addTask(db, user, description)
             setDescription('')
         } catch (error) {
             console.log('Error adding new task: ', error)
@@ -81,7 +81,7 @@ const Homepage = () => {
         }
 
         try {
-            await deleteTask(db, user, taskId);
+            await deleteTask(db, user, taskId)
         } catch (error) {
             console.error('Error deleting task:', error)
         }
@@ -142,7 +142,7 @@ const Homepage = () => {
     tasks.sort(compare)
 
     return (
-        <>
+        <div className={styles.homepage}>
             <input
                 type="text"
                 value={description}
@@ -153,18 +153,6 @@ const Homepage = () => {
                 placeholder="Add a new task"
             />
             {(descriptionError && <span style={{ color: 'red' }}>{descriptionError}</span>)}
-            <select value={urgency} onChange={(e) => setUrgency(e.target.value)}>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-            </select>
-            <label>
-                <input
-                    type="checkbox"
-                    checked={flag}
-                    onChange={(e) => setFlag(e.target.checked)}
-                /> Flag
-            </label>
             <button onClick={handleAddTask}>Add Task</button>
             <TaskList
                 tasks={tasks}
@@ -174,7 +162,7 @@ const Homepage = () => {
                 onDeleteTask={handleDeleteTask}
             />
             <SignOut />
-        </>
+        </div>
     )
 }
 

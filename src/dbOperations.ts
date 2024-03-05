@@ -3,19 +3,14 @@ import { Firestore, collection, doc, addDoc, deleteDoc, updateDoc } from 'fireba
 // -----------------------
 // Add Task Function
 // -----------------------
-export const addTask = async (db: Firestore, user: { uid: string }, description: string, flag: boolean, urgency: string) => {
-    if (!description) {
-        console.log('Add a description')
-        return
-    }
-
+export const addTask = async (db: Firestore, user: { uid: string }, description: string) => {
     const taskCollectionRef = collection(db, "Users", user.uid, "Tasks")
     await addDoc(taskCollectionRef, {
         description,
         completed: false,
-        flag,
+        flag: false,
         timestamp: new Date(),
-        urgency
+        urgency: 'Low'
     })
 }
 
@@ -25,7 +20,6 @@ export const addTask = async (db: Firestore, user: { uid: string }, description:
 export const deleteTask = async(db: Firestore, user: { uid: string }, taskId: string) => {
     const taskDocRef = doc(db, "Users", user.uid, "Tasks", taskId)
     await deleteDoc(taskDocRef)
-
 }
 
 // -----------------------
