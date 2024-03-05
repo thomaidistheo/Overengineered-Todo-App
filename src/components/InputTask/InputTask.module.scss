@@ -50,9 +50,14 @@
             border: none;
             border-radius: $borderRadiusSmall;
             transition: background-color 150ms ease-in-out;
+            cursor: pointer;
     
             &:hover {
                 background-color: $white-30;
+            }
+
+            svg {
+                color: $white-30;
             }
         }
     }
