@@ -1,4 +1,4 @@
-
+import styles from './InputTask.module.scss'
 interface InputTaskProps {
     description: string;
     setDescription: (description: string) => void;
@@ -7,9 +7,9 @@ interface InputTaskProps {
     handleAddTask: () => void;
 }
 
-const InputTask: FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask }) => {
+const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask }) => {
     
-    const handleChange = (e) => {
+    const handleChange = (e:any) => {
         if (descriptionError) {
             setDescriptionError('')
         }
@@ -17,16 +17,20 @@ const InputTask: FC<InputTaskProps> = ({ description, setDescription, descriptio
     }
     
     return (
-        <div>
-            {(descriptionError && <span>{descriptionError}</span>)}
-            <input
-                type="text"
-                value={description}
-                onChange={handleChange}
-                placeholder="Add a new task"
-            />
-            <button onClick={handleAddTask}>Add Task</button>
+        <div className={styles.inputComponent}>
+            {(descriptionError && <div className={styles.inputError}>{descriptionError}</div>)}
+            <div className={styles.inputTaskCont}>
+                <input
+                    className={styles.inputTask}
+                    type="text"
+                    value={description}
+                    onChange={handleChange}
+                    placeholder="Add a new task"
+                />
+                <button className={styles.inputBtn} onClick={handleAddTask}></button>
+            </div>
         </div>
+
     )
 }
 

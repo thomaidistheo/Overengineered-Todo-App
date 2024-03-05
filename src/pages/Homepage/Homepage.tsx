@@ -145,6 +145,7 @@ const Homepage = () => {
 
     return (
         <div className={styles.homepage}>
+            <SignOut />
             <TaskList
                 tasks={tasks}
                 onToggleComplete={handleComplete}
@@ -159,7 +160,6 @@ const Homepage = () => {
                 setDescriptionError={setDescriptionError}
                 handleAddTask={handleAddTask}
             />
-            <SignOut />
         </div>
     )
 }

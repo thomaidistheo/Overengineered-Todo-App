@@ -2,7 +2,7 @@
 
 .homepage {
     width: 100%;
-
-    @include displayFlex(column, center, center, 32px);
+    height: 100vh;
+    @include displayFlex(column, center, flex-start, 32px);
 
 }

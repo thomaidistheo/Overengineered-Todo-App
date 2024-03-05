@@ -1,5 +1,59 @@
 @import '../../styles/imports';
 
-.inputTask {
-    border: 1px solid red;
+
+.inputComponent {
+    @include displayFlex(column, center, center, 16px);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 520px;
+    padding: 16px 18px;
+    background-color: $clrSecondary;
+    border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
+    
+    .inputError {
+        color: $clrError;
+    }
+    
+    .inputTaskCont {
+        @include displayFlex(row, center, center, 16px);
+        width: 100%;
+        max-width: $maxWidthDesktop;
+        padding: 12px;
+        border: 1px solid $clrTertiary;
+        border-radius: $borderRadiusNormal;
+    
+        .inputTask {
+            height: 100%;
+            width: 100%;
+            padding: 4px;
+            font-size: 16px;
+            line-height: 18px;
+            background: none;
+            border: none;
+            color: $white-60;
+    
+            &::placeholder {
+                opacity: 0.4;
+            }
+    
+            &:focus {
+                outline-style: none;
+                border: none;
+            }
+        }
+    
+        .inputBtn {
+            width: 32px;
+            height: 32px;
+            background-color: $clrTertiary;
+            border: none;
+            border-radius: $borderRadiusSmall;
+            transition: background-color 150ms ease-in-out;
+    
+            &:hover {
+                background-color: $white-30;
+            }
+        }
+    }
 }
