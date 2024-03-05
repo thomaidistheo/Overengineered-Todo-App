@@ -5,6 +5,7 @@ import { useAuth } from '../../AuthContext'
 import SignOut from '../../components/SignoutBtn/SignoutBtn'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
+import InputTask from '../../components/InputTask/InputTask'
 
 import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
 
@@ -26,6 +27,7 @@ const Homepage = () => {
     const [tasks, setTasks] = useState<Task[]>([])
     const [description, setDescription] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
+
 
     const navigate = useNavigate()
 
@@ -143,23 +145,19 @@ const Homepage = () => {
 
     return (
         <div className={styles.homepage}>
-            <input
-                type="text"
-                value={description}
-                onChange={(e) => {
-                    (descriptionError) ? setDescriptionError('') : ''
-                    setDescription(e.target.value)
-                }}
-                placeholder="Add a new task"
-            />
-            {(descriptionError && <span style={{ color: 'red' }}>{descriptionError}</span>)}
-            <button onClick={handleAddTask}>Add Task</button>
             <TaskList
                 tasks={tasks}
                 onToggleComplete={handleComplete}
                 onToggleFlag={handleFlag}
                 onUrgencyChange={handleChangeUrgency}
                 onDeleteTask={handleDeleteTask}
+            />
+            <InputTask 
+                description={description}
+                setDescription={setDescription}
+                descriptionError={descriptionError}
+                setDescriptionError={setDescriptionError}
+                handleAddTask={handleAddTask}
             />
             <SignOut />
         </div>
