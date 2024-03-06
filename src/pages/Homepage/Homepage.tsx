@@ -31,6 +31,7 @@ const Homepage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
     const [modalTitle, setModalTitle] = useState<string>("Delete Task?")
+    const [modalDescription, setModalDescription] = useState<string>("Delete Task?")
 
     const navigate = useNavigate()
 
@@ -101,7 +102,8 @@ const Homepage = () => {
 
     const handleDeleteTask = (taskId: string) => {
         setTaskToDelete(taskId)
-        setModalTitle('Delete task?')
+        setModalTitle('Delete')
+        setModalDescription('Are you sure you want to delete this item?')
         setIsModalOpen(true)
     }
     
@@ -171,6 +173,7 @@ const Homepage = () => {
                 onConfirm={confirmDeleteTask}
                 onCancel={cancelDeleteTask}
                 modalTitle={modalTitle}
+                modalDescription={modalDescription}
             />
             <TaskList
                 tasks={tasks}

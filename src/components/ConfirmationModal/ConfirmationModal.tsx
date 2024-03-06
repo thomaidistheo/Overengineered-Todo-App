@@ -6,15 +6,19 @@ interface ConfirmationModalProps {
 	onConfirm: () => void
 	onCancel: () => void
 	modalTitle: string
+	modalDescription: string
 }
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onConfirm, onCancel, modalTitle }) => {
+const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onConfirm, onCancel, modalTitle, modalDescription }) => {
 	if (!isOpen) return null;
-
+	
 	return (
-		<div className={styles.confirmationModalCont}>
+		<div className={styles.confirmationModalCont} onClick={onCancel}>
 			<div className={styles.confirmationModal}>
-				<div className={styles.modalTitle}>{modalTitle}</div>
+				<div className={styles.modalText}>
+					<div className={styles.modalTitle}>{modalTitle}</div>
+					<div className={styles.modalDescription}>{modalDescription}</div>
+				</div>
 				<div className={styles.options}>
 					<BaseBtn 
 						buttonType='delete'
@@ -28,7 +32,6 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onConfirm
 					/>
 				</div>
 			</div>
-
 		</div>
 	)
 }

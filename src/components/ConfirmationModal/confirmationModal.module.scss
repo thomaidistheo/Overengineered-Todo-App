@@ -11,6 +11,10 @@
     @include displayFlex(column, center, center, 0);
     padding: 0 8px;
 
+    @media (max-width: $mobile) {
+        justify-content: flex-end;
+    }
+
     .confirmationModal {
         width: 100%;
         max-width: 520px;
@@ -19,21 +23,35 @@
         background-color: $clrSecondary;
         padding: 32px;
         @include displayFlex(column, flex-start, center, 64px);
+        // animation: slide-up .35s cubic-bezier(0.4, 0, 0.2, 1) 200ms backwards;
+        transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
         @media (max-width: $mobile) {
             padding: 16px;
+            border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
+            @include displayFlex(column, flex-start, flex-start, 64px);
         }
 
-        .modalTitle {
-            font-size: $fontSizeBigger;
-            line-height: 32px;
-            font-weight: 400;
-            color: $white-60;
+        .modalText {
+            .modalTitle {
+                font-size: $fontSizeBigger;
+                line-height: 32px;
+                font-weight: 400;
+                color: $white-60;
+    
+                @media (max-width: $mobile) {
+                    font-size: 18px;
+                }
+            }
 
-            @media (max-width: $mobile) {
-                font-size: 18px;
+            .modalDescription {
+                font-size: $fontSizeBase;
+                line-height: 32px;
+                font-weight: 300;
+                color: $white-30;
             }
         }
+
 
         .options {
             @include displayFlex(column, flex-start, center, 16px);
