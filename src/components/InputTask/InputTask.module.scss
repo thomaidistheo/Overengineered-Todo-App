@@ -12,7 +12,7 @@
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
     
     .inputError {
-        color: $clrError;
+        color: $clrError-100;
     }
     
     .inputTaskCont {
@@ -52,7 +52,7 @@
             transition: background-color 150ms ease-in-out;
             cursor: pointer;
             padding: 4px;
-            
+
             &:hover {
                 background-color: $white-30;
             }

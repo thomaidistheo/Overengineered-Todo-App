@@ -23,13 +23,13 @@
         background-color: $clrSecondary;
         padding: 32px;
         @include displayFlex(column, flex-start, center, 64px);
-        // animation: slide-up .35s cubic-bezier(0.4, 0, 0.2, 1) 200ms backwards;
+        animation: slide-up .4s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;
         transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
 
         @media (max-width: $mobile) {
             padding: 16px;
             border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
-            @include displayFlex(column, flex-start, flex-start, 64px);
+            @include displayFlex(column, flex-start, flex-start,  64px);
         }
 
         .modalText {
