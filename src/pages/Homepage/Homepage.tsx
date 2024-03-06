@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom' 
 import { Firestore, collection, query, onSnapshot, getFirestore, Timestamp } from 'firebase/firestore'
 import { useAuth } from '../../AuthContext'
-import SignOut from '../../components/SignoutBtn/SignoutBtn'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
 import InputTask from '../../components/InputTask/InputTask'
@@ -65,7 +64,7 @@ const Homepage = () => {
         }
 
         if (description.trim() === '') {
-            setDescriptionError('Description cannot be empty')
+            setDescriptionError("Task can't be empty")
             return
         } else {
             setDescriptionError('')
@@ -167,7 +166,6 @@ const Homepage = () => {
 
     return (
         <div className={styles.homepage}>
-            <SignOut />
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onConfirm={confirmDeleteTask}

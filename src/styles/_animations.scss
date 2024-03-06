@@ -14,3 +14,28 @@
     0% { -webkit-transform: translateY(0); }
 }
 
+// ---------------------------------------------------
+
+@keyframes slide-up-drawer {
+    0% { 
+        opacity: 1;
+        -webkit-transform: translateY(calc(100% - 90px)); 
+    }
+    100% { 
+        opacity:1;
+        -webkit-transform: translateY(0); 
+    }
+}
+
+@keyframes slide-down-drawer {
+    0% { 
+        opacity: 1;
+        -webkit-transform: translateY(calc(100% - 318px + 90px)) 
+    }
+    100% {
+        opacity: 1; 
+        -webkit-transform: translateY(0);
+        display: none;
+    }
+}
+

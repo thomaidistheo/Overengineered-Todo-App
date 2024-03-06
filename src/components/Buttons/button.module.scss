@@ -1,0 +1,54 @@
+@import '../../styles/imports';
+
+.baseBtn {
+    width: 100%;
+    color: $white-30;
+    background: transparent;
+    border: 1px solid $white-30;
+    border-radius: $borderRadiusNormal;
+    padding: 16px 0;
+    cursor: pointer;
+    transition: scale 150ms ease-in-out;
+    display: grid;
+    place-content: center;
+    font-size: $fontSizeBase;
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &.deleteBtn {
+        background-color: $clrError-50;
+        color: $clrError-100;
+        border: 1px solid $clrError-100;
+    }
+}
+
+.thinBtn {
+    width: 100%;
+    color: $white-30;
+    background: transparent;
+    border: 1px solid $white-30;
+    border-radius: $borderRadiusNormal;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: scale 150ms ease-in-out;
+    display: grid;
+    place-content: center;
+    font-size: $fontSizeBase;
+
+    @media (max-width: $mobile) {
+        padding: 8px 0;
+        font-size: $fontSizeSmall;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &.deleteBtn {
+        background-color: $clrError-50;
+        color: $clrError-100;
+        border: 1px solid $clrError-100;
+    }
+}

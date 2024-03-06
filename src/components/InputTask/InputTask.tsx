@@ -1,4 +1,8 @@
+import { useState } from 'react'
+import { getAuth, signOut } from 'firebase/auth'
 import styles from './InputTask.module.scss'
+import { ThinBtn } from '../Buttons/Button';
+import { IconArrowDown, IconArrowUp, IconReturnArrow } from '../Icons';
 interface InputTaskProps {
     description: string;
     setDescription: (description: string) => void;
@@ -8,18 +12,51 @@ interface InputTaskProps {
 }
 
 const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask }) => {
-    
-    const handleChange = (e:any) => {
+    const [openMenu, setOpenMenu] = useState<boolean>(false)
+
+    const handleLocationChange = () => {
+        console.log('location change to be implemented')
+    }
+
+    const handleSignOut = async () => {
+        const auth = getAuth()
+        try {
+            await signOut(auth)
+            console.log('User signed out')
+        } catch (error) {
+            console.error('Error signing out:', error)
+        }
+    }
+
+    const handleDeleteAccount = () => {
+        console.log('delete account to be implemented')
+    }
+
+    const handleChange = (e:React.FormEvent<HTMLInputElement>) => {
         if (descriptionError) {
             setDescriptionError('')
         }
-        setDescription(e.target.value)
+        setDescription(e.currentTarget.value)
     }
     
     return (
-        <div className={styles.inputComponent}>
+        <div className={`${styles.inputComponent} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
             {(descriptionError && <div className={styles.inputError}>{descriptionError}</div>)}
             <div className={styles.inputTaskCont}>
+                <button className={styles.inputBtn} onClick={() => setOpenMenu(!openMenu)}>
+                    {openMenu 
+                        ? <IconArrowDown 
+                            height="24"
+                            width="24"
+                            color="#FFFFFF4D"
+                        />
+                        : <IconArrowUp 
+                            height="24"
+                            width="24"
+                            color="#FFFFFF4D"
+                        />
+                    }
+                </button>
                 <input
                     className={styles.inputTask}
                     type="text"
@@ -28,12 +65,40 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                     placeholder="Add a new task"
                 />
                 <button className={styles.inputBtn} onClick={handleAddTask}>
-                    <svg fill="none" viewBox="0 0 24 24" height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
-                        <path xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" d="M3 14C3 13.4477 3.44772 13 4 13L16 13C17.6569 13 19 11.6569 19 10L19 6C19 5.44771 19.4477 5 20 5C20.5523 5 21 5.44771 21 6L21 10C21 12.7614 18.7614 15 16 15L4 15C3.44772 15 3 14.5523 3 14Z" fill="currentColor"></path>
-                        <path xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" d="M3.29289 14.7071C2.90237 14.3166 2.90237 13.6834 3.29289 13.2929L7.29289 9.29289C7.68342 8.90237 8.31658 8.90237 8.70711 9.29289C9.09763 9.68342 9.09763 10.3166 8.70711 10.7071L5.41421 14L8.70711 17.2929C9.09763 17.6834 9.09763 18.3166 8.70711 18.7071C8.31658 19.0976 7.68342 19.0976 7.29289 18.7071L3.29289 14.7071Z" fill="currentColor"></path>
-                    </svg>
+                    <IconReturnArrow
+                        height="24"
+                        width="24"
+                        color="#FFFFFF4D"
+                    />
                 </button>
             </div>
+            {<div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
+                <div className={styles.themeSelectCont}>
+                    <div className={styles.title}>Theme</div>
+                    <div className={styles.themeOptions}>
+                        <div className={`${styles.themeOption} ${styles.darkMode}`}></div>
+                        <div className={`${styles.themeOption} ${styles.lightMode}`}></div>
+                    </div>
+                </div>
+                <div className={styles.accountSettingsCont}>
+                    <div className={styles.title}>Account Settings</div>
+                    <ThinBtn 
+                        buttonType=''
+                        buttonText='Change Location'
+                        onClick={handleLocationChange}
+                    />
+                    <ThinBtn 
+                        buttonType=''
+                        buttonText='Sign Out'
+                        onClick={handleSignOut}
+                    />
+                    <ThinBtn 
+                        buttonType='delete'
+                        buttonText='Delete Account'
+                        onClick={handleDeleteAccount}
+                    />
+                </div>
+            </div>}
         </div>
     )
 }

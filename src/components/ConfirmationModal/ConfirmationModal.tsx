@@ -1,4 +1,4 @@
-import BaseBtn from '../Buttons/BaseBtn'
+import { BaseBtn } from '../Buttons/Button'
 import styles from './confirmationModal.module.scss'
 
 interface ConfirmationModalProps {

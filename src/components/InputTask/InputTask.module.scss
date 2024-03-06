@@ -10,6 +10,11 @@
     padding: 16px 18px;
     background-color: $clrSecondary;
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
+
+    &.openMenu {
+        animation: slide-up-drawer .4s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;
+        transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
     
     .inputError {
         color: $clrError-100;
@@ -56,9 +61,88 @@
             &:hover {
                 background-color: $white-30;
             }
+            
+            &:active {
+                transform: scale(0.96);
+            }
 
             svg {
                 color: $white-30;
+            }
+        }
+    }
+
+    .menuCont {
+        @include displayFlex(row, flex-start, center, 16px);
+        width: 100%;
+        height: 100%;
+
+        @media (max-width: $mobile) {
+            @include displayFlex(column, center, center, 16px);
+        }
+
+        &.openMenu {
+            animation: slide-up-drawer .8s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;
+            transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    
+        &.closeMenu {
+            animation: slide-down-drawer 0s cubic-bezier(0.4, 0, 0.2, 1) 10ms forwards;
+        }
+
+        .themeSelectCont, 
+        .accountSettingsCont {
+            background-color: $clrPrimary;
+            color: $white-60;
+            width: 50%;
+            height: 100%;
+            border-radius: $borderRadiusNormal;
+            @include displayFlex(column, flex-start, flex-start, 8px);
+            padding: 16px;
+
+            @media (max-width: $mobile) {
+                width: 100%;
+            }
+
+            .title {
+                font-size: $fontSizeBase;
+                width: 100%;
+                margin-bottom: 8px;
+
+                @media (max-width: $mobile) {
+                    font-size: $fontSizeSmall;
+                }
+            }
+        }
+
+        .themeSelectCont {
+            .themeOptions {
+                height: 100%;
+                width: 100%;
+                @include displayFlex(row, center, center, 8px);
+                flex-wrap: wrap;
+
+                .themeOption {
+                    width: calc(50% - 4px);
+                    height: 24px;
+                    border: 1px solid $white-30;
+                    border-radius: $borderRadiusSmall;
+                    cursor: pointer;
+
+                    &:active {
+                        transform: scale(0.98);
+                    }
+
+                    &.darkMode {
+                        background: rgb(35,37,38);
+                        background: linear-gradient(90deg, rgb(22, 22, 24) 20%, rgba(35,37,38,1) 100%);
+                    }
+
+                    &.lightMode {
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(90deg, rgb(255, 255, 255) 20%, rgb(192, 199, 202, 1) 100%);
+                    }
+                }
             }
         }
     }
