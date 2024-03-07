@@ -72,7 +72,7 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                     />
                 </button>
             </div>
-            {<div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
+            {openMenu && <div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
                 <div className={styles.themeSelectCont}>
                     <div className={styles.title}>Theme</div>
                     <div className={styles.themeOptions}>

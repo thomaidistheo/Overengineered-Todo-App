@@ -29,8 +29,8 @@ const Homepage = () => {
     const [descriptionError, setDescriptionError] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
-    const [modalTitle, setModalTitle] = useState<string>("Delete Task?")
-    const [modalDescription, setModalDescription] = useState<string>("Delete Task?")
+    const [modalTitle, setModalTitle] = useState<string>("")
+    const [modalDescription, setModalDescription] = useState<string>("")
 
     const navigate = useNavigate()
 
