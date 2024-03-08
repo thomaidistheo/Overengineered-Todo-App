@@ -2,9 +2,9 @@
 
 .baseBtn {
     width: 100%;
-    color: $white-30;
+    color: var(--clrAccent-30);
     background: transparent;
-    border: 1px solid $white-30;
+    border: 1px solid var(--clrAccent-30);
     border-radius: $borderRadiusNormal;
     padding: 16px 0;
     cursor: pointer;
@@ -12,13 +12,19 @@
     display: grid;
     place-content: center;
     font-size: $fontSizeBase;
+    user-select: none;
 
     &:active {
         transform: scale(0.98);
     }
 
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+    }
+
     &.deleteBtn {
-        background-color: $clrError-50;
+        background: none;
         color: $clrError-100;
         border: 1px solid $clrError-100;
     }
@@ -26,9 +32,9 @@
 
 .thinBtn {
     width: 100%;
-    color: $white-30;
+    color: var(--clrAccent-30);
     background: transparent;
-    border: 1px solid $white-30;
+    border: 1px solid var(--clrAccent-30);
     border-radius: $borderRadiusNormal;
     padding: 12px 0;
     cursor: pointer;
@@ -36,18 +42,23 @@
     display: grid;
     place-content: center;
     font-size: $fontSizeBase;
+    user-select: none;
 
     @media (max-width: $mobile) {
         padding: 8px 0;
-        font-size: $fontSizeSmall;
     }
 
     &:active {
         transform: scale(0.98);
     }
 
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+    }
+
     &.deleteBtn {
-        background-color: $clrError-50;
+        background: none;
         color: $clrError-100;
         border: 1px solid $clrError-100;
     }

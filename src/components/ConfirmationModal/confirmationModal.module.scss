@@ -18,9 +18,9 @@
     .confirmationModal {
         width: 100%;
         max-width: 520px;
-        border: 1px solid $clrTertiary;
+        border: 1px solid var(--clrTertiary);
         border-radius: $borderRadiusNormal;
-        background-color: $clrSecondary;
+        background-color: var(--clrSecondary);
         padding: 32px;
         @include displayFlex(column, flex-start, center, 64px);
         animation: slide-up .4s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;
@@ -37,7 +37,7 @@
                 font-size: $fontSizeBigger;
                 line-height: 32px;
                 font-weight: 400;
-                color: $white-60;
+                color: var(--clrAccent-60);
     
                 @media (max-width: $mobile) {
                     font-size: 18px;
@@ -48,7 +48,7 @@
                 font-size: $fontSizeBase;
                 line-height: 32px;
                 font-weight: 300;
-                color: $white-30;
+                color: var(--clrAccent-30);
             }
         }
 

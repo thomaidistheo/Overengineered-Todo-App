@@ -2,13 +2,13 @@
 
 .taskItem {
     width: 100%;
-    background-color: $clrSecondary;
-    color: $white-60;
+    background-color: var(--clrSecondary);
+    color: var(--clrAccent-60);
     max-width: 520px;
     padding: 8px 16px;
-    border: 1px solid $clrTertiary;
+    border: 1px solid var(--clrTertiary);
     border-radius: $borderRadiusNormal;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
     @include displayFlex(column, flex-start, center, 4px);
     
     .taskTime {
@@ -25,14 +25,14 @@
             min-height: 18px;
             width: 18px;
             height: 18px;
-            border: 2px solid $white-30;
+            border: 2px solid var(--clrAccent-30);
             border-radius: $borderRadiusSmall;
             cursor: pointer;
             @include displayFlex(row, center, center, 0px);
             transition: all 150ms ease-in-out;
 
             &.completed {
-                background-color: $white-30;
+                background-color: var(--clrAccent-30);
             }
         }
 
@@ -56,12 +56,13 @@
             .urgencyIcon {
                 width: 32px;
                 height: 32px;
+                font-size: 20px;
                 cursor: pointer;
                 border-radius: $borderRadiusSmall;
                 @include displayFlex(row, center, center, 0px);
                 transition: background-color 150ms ease-in-out;
                 user-select: none;
-                color: $white-30;
+                color: var(--clrAccent-30);
 
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.1);
@@ -70,7 +71,7 @@
                 svg {
                     height: 24px;
                     width: 24px;
-                    color: $white-30;
+                    color: var(--clrAccent-30);
                 }
 
                 &.flagged {
@@ -85,6 +86,7 @@
 
                 &.highUrgency {
                     color: $clrError-100;
+                    text-shadow: 0px 0px 15px $clrError-100;
                 }
             }
         }

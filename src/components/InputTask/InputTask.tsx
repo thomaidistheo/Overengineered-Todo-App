@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { getAuth, signOut } from 'firebase/auth'
 import styles from './InputTask.module.scss'
-import { ThinBtn } from '../Buttons/Button';
+import { BaseBtn } from '../Buttons/Button';
 import { IconArrowDown, IconArrowUp, IconReturnArrow } from '../Icons';
 interface InputTaskProps {
-    description: string;
-    setDescription: (description: string) => void;
-    descriptionError: string;
-    setDescriptionError: (error: string) => void;
-    handleAddTask: () => void;
+    description: string
+    setDescription: (description: string) => void
+    descriptionError: string
+    setDescriptionError: (error: string) => void
+    handleAddTask: () => void
+    handleThemeChange: (themeSelect: string) => void
 }
 
-const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask }) => {
+const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask, handleThemeChange }) => {
     const [openMenu, setOpenMenu] = useState<boolean>(false)
 
     const handleLocationChange = () => {
@@ -32,7 +33,7 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
         console.log('delete account to be implemented')
     }
 
-    const handleChange = (e:React.FormEvent<HTMLInputElement>) => {
+    const handleInput = (e:React.FormEvent<HTMLInputElement>) => {
         if (descriptionError) {
             setDescriptionError('')
         }
@@ -48,12 +49,12 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                         ? <IconArrowDown 
                             height="24"
                             width="24"
-                            color="#FFFFFF4D"
+                            // color="#000"
                         />
                         : <IconArrowUp 
                             height="24"
                             width="24"
-                            color="#FFFFFF4D"
+                            // color="#000"
                         />
                     }
                 </button>
@@ -61,14 +62,14 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                     className={styles.inputTask}
                     type="text"
                     value={description}
-                    onChange={handleChange}
+                    onChange={handleInput}
                     placeholder="Add a new task"
                 />
                 <button className={styles.inputBtn} onClick={handleAddTask}>
                     <IconReturnArrow
                         height="24"
                         width="24"
-                        color="#FFFFFF4D"
+                        // color="#000"
                     />
                 </button>
             </div>
@@ -76,26 +77,29 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                 <div className={styles.themeSelectCont}>
                     <div className={styles.title}>Theme</div>
                     <div className={styles.themeOptions}>
-                        <div className={`${styles.themeOption} ${styles.darkMode}`}></div>
-                        <div className={`${styles.themeOption} ${styles.lightMode}`}></div>
+                        <div className={`${styles.themeOption} ${styles.darkMode}`} onClick={() => handleThemeChange('themeDark')}></div>
+                        <div className={`${styles.themeOption} ${styles.lightMode}`} onClick={() => handleThemeChange('themeLight')}></div>
                     </div>
                 </div>
                 <div className={styles.accountSettingsCont}>
                     <div className={styles.title}>Account Settings</div>
-                    <ThinBtn 
+                    <BaseBtn 
                         buttonType=''
                         buttonText='Change Location'
                         onClick={handleLocationChange}
+                        disabled={true}
                     />
-                    <ThinBtn 
+                    <BaseBtn 
                         buttonType=''
                         buttonText='Sign Out'
                         onClick={handleSignOut}
+                        disabled={false}
                     />
-                    <ThinBtn 
+                    <BaseBtn 
                         buttonType='delete'
                         buttonText='Delete Account'
                         onClick={handleDeleteAccount}
+                        disabled={true}
                     />
                 </div>
             </div>}

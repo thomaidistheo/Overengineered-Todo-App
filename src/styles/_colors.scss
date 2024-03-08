@@ -3,15 +3,72 @@ html {
 }
 
 $white-100: #FFFFFF;
-$white-60: rgba(255, 255, 255, 0.6);
-$white-30: rgba(255, 255, 255, 0.3);
+$white-60: rgba(198, 198, 198, 0.6);
+$white-30: rgba(145, 145, 145, 0.3);
 $white-10: rgba(255, 255, 255, 0.1);
 
-$clrPrimary: #0A0A0A;
-$clrSecondary: #111111;
-$clrTertiary: #333333; 
+$black-100: #000;
+$black-60: rgba(0, 0, 0, 0.6);
+$black-30: rgba(0, 0, 0, 0.3);
+$black-10: rgba(0, 0, 0, 0.1);
 
-$clrWarning: rgb(186, 114, 55);
+$clrWarning: rgb(218, 115, 32);
 $clrError-50: #e4bbbb;
 $clrError-100: #d84848;
 $clrError: red;
+
+.themeLight {
+    --clrPrimary: #EFEFEF;
+    --clrSecondary: #FFF;
+    --clrTertiary: #f1f1f1;
+    
+    --clrAccent-100: #{$black-100};
+    --clrAccent-60: #{$black-60};
+    --clrAccent-30: #{$black-30};
+    --clrAccent-10: #{$black-10};
+}
+
+.themeDark {
+    --clrPrimary: #0A0A0A;
+    --clrSecondary: #111;
+    --clrTertiary: #333; 
+
+    --clrAccent-100: #{$white-100};
+    --clrAccent-60: #{$white-60};
+    --clrAccent-30: #{$white-30};
+    --clrAccent-10: #{$white-10};
+}
+
+:root {
+    --clrPrimary: #EFEFEF;
+    --clrSecondary: #FFF;
+    --clrTertiary: #f1f1f1;
+
+    --clrAccent-100: #{$white-100};
+    --clrAccent-60: #{$white-60};
+    --clrAccent-30: #{$white-30};
+    --clrAccent-10: #{$white-10};
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --clrAccent-100: #{$black-100};
+        --clrAccent-60: #{$black-60};
+        --clrAccent-30: #{$black-30};
+        --clrAccent-10: #{$black-10};
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --clrPrimary: #0A0A0A;
+        --clrSecondary: #111;
+        --clrTertiary: #333; 
+
+        --clrAccent-100: #{$white-100};
+        --clrAccent-60: #{$white-60};
+        --clrAccent-30: #{$white-30};
+        --clrAccent-10: #{$white-10};
+    }
+}
+

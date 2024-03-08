@@ -8,7 +8,7 @@
     width: 100%;
     max-width: 520px;
     padding: 16px 18px;
-    background-color: $clrSecondary;
+    background-color: var(--clrSecondary);
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
 
     &.openMenu {
@@ -25,7 +25,7 @@
         width: 100%;
         max-width: $maxWidthDesktop;
         padding: 12px;
-        border: 1px solid $clrTertiary;
+        border: 1px solid var(--clrTertiary);
         border-radius: $borderRadiusNormal;
     
         .inputTask {
@@ -36,7 +36,7 @@
             line-height: 18px;
             background: none;
             border: none;
-            color: $white-60;
+            color: var(--clrAccent-60);
     
             &::placeholder {
                 opacity: 0.4;
@@ -51,7 +51,7 @@
         .inputBtn {
             width: 32px;
             height: 32px;
-            background-color: $clrTertiary;
+            background-color: var(--clrTertiary);
             border: none;
             border-radius: $borderRadiusSmall;
             transition: background-color 150ms ease-in-out;
@@ -59,7 +59,7 @@
             padding: 4px;
 
             &:hover {
-                background-color: $white-30;
+                background-color: var(--clrAccent-30);
             }
             
             &:active {
@@ -67,7 +67,7 @@
             }
 
             svg {
-                color: $white-30;
+                color: var(--clrAccent-30);
             }
         }
     }
@@ -85,15 +85,11 @@
             animation: slide-up-drawer .8s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;
             transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
         }
-    
-        &.closeMenu {
-            animation: slide-down-drawer 0s cubic-bezier(0.4, 0, 0.2, 1) 10ms forwards;
-        }
 
         .themeSelectCont, 
         .accountSettingsCont {
-            background-color: $clrPrimary;
-            color: $white-60;
+            background-color: var(--clrPrimary);
+            color: var(--clrAccent-60);
             width: 50%;
             height: 100%;
             border-radius: $borderRadiusNormal;
@@ -108,10 +104,6 @@
                 font-size: $fontSizeBase;
                 width: 100%;
                 margin-bottom: 8px;
-
-                @media (max-width: $mobile) {
-                    font-size: $fontSizeSmall;
-                }
             }
         }
 
@@ -125,7 +117,7 @@
                 .themeOption {
                     width: calc(50% - 4px);
                     height: 24px;
-                    border: 1px solid $white-30;
+                    border: 1px solid var(--clrAccent-30);
                     border-radius: $borderRadiusSmall;
                     cursor: pointer;
 

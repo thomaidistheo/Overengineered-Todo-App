@@ -4,11 +4,12 @@ interface BtnProps {
     buttonType: string
     buttonText: string
     onClick: () => void
+    disabled?: boolean
 }
 
-export const BaseBtn: React.FC<BtnProps> = ({ buttonType, buttonText, onClick }) => {
+export const BaseBtn: React.FC<BtnProps> = ({ buttonType, buttonText, onClick, disabled }) => {
     return (
-        <button className={`${styles.baseBtn} ${buttonType == 'delete' ? styles.deleteBtn : ''}`} onClick={onClick}>
+        <button className={`${styles.baseBtn} ${buttonType == 'delete' ? styles.deleteBtn : ''}`} onClick={onClick} disabled={disabled}>
             {buttonText}
         </button>
     )

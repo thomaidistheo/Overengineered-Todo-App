@@ -7,6 +7,6 @@
 }
 
 .app {
-    background-color: $clrPrimary;
+    background-color: var(--clrPrimary);
     font-family: $fontFamily;
 }

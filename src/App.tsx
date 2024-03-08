@@ -8,11 +8,17 @@ import { AuthProvider } from './AuthContext'
 import { auth } from './firebase'
 import { User } from 'firebase/auth'
 
-import styles from './app.module.scss';
+import './app.scss';
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [user, setUser] = React.useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [theme, setTheme] =  useState<string>('themeLight')
+
+  const handleThemeChange = (themeSelect: string) => {
+    console.log(themeSelect)
+    setTheme(themeSelect)
+  }
 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -24,14 +30,14 @@ function App() {
   }, []);
 
   return (
-    <div className={styles.app}>
+    <div className={`app ${theme}`}>
       {isLoading 
       ? <h1>loading</h1>
       : <AuthProvider> 
           <Router>
             <Routes>
-              <Route path="/" element={user ? <Homepage /> : <LoginPage />} />
-              <Route path="/login" element={!user ? <LoginPage /> : <Homepage />} />
+              <Route path="/" element={user ? <Homepage handleThemeChange={handleThemeChange} /> : <LoginPage />} />
+              <Route path="/login" element={!user ? <LoginPage /> : <Homepage handleThemeChange={handleThemeChange}/>} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Router>

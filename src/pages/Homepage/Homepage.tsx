@@ -22,7 +22,11 @@ interface Task {
     timestamp: Timestamp
 }
 
-const Homepage = () => {
+interface HomepageProps {
+    handleThemeChange: (themeSelect: string) => void
+}
+
+const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     const { user } = useAuth()
     const [tasks, setTasks] = useState<Task[]>([])
     const [description, setDescription] = useState("")
@@ -186,6 +190,7 @@ const Homepage = () => {
                 descriptionError={descriptionError}
                 setDescriptionError={setDescriptionError}
                 handleAddTask={handleAddTask}
+                handleThemeChange={handleThemeChange}
             />
         </div>
     )
