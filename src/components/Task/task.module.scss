@@ -10,6 +10,7 @@
     border-radius: $borderRadiusNormal;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
     @include displayFlex(column, flex-start, center, 4px);
+    transition: all 200ms ease-in-out;
     
     .taskTime {
         font-size: $fontSizeSmall;
