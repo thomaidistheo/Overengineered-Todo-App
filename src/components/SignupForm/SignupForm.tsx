@@ -57,11 +57,12 @@ const SignUpForm: React.FC = () => {
             })
             console.log("User signed up with email and password")
         } catch (error: unknown) {
+            console.error(error)
             if (isErrorWithMessage(error)) {
                 const errorMessage = error.message
                 setError(errorMessage)
             } else {
-                setError("An unexpected error occured - Google Signup - 001")
+                setError("An unexpected error occurred - Google Signup - 001")
             }
         }
     }

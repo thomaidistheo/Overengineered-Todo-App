@@ -1,6 +1,17 @@
 import { Firestore, collection, doc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 // -----------------------
+// Change Theme Function
+// -----------------------
+export const changeTheme = async (db: Firestore, user: { uid: string }, themeSelect: string) => {
+    const userDocRef = doc(db, "Users", user.uid)
+    
+    await updateDoc(userDocRef, {
+        theme: themeSelect
+    })
+}
+
+// -----------------------
 // Add Task Function
 // -----------------------
 export const addTask = async (db: Firestore, user: { uid: string }, description: string) => {

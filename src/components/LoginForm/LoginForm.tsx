@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { getAuth, signInWithPopup, GoogleAuthProvider, fetchSignInMethodsForEmail } from 'firebase/auth'
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from '../../firebase'
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -37,7 +39,21 @@ const LoginForm: React.FC = () => {
         try {
             const result = await signInWithPopup(auth, provider)
             const user = result.user
-            console.log('Logged in user: ', user)
+            const userDocRef = doc(db, "Users", user.uid)
+            const docSnap = await getDoc(userDocRef)
+            if (!docSnap.exists()) {
+                await setDoc(userDocRef, {
+                    email: user.email,
+                    name: user.displayName,
+                    signUpDate: new Date(),
+                    usage: 1,
+                })
+            } else {
+                await updateDoc(userDocRef, {
+                    lastLogin: new Date(),
+                    usage: docSnap.data().usage + 1
+                })
+            }
         } catch (error) {
             console.log('Error signing in with Google: ', error)
         }
