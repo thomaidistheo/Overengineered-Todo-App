@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { getAuth, signOut } from 'firebase/auth'
 import styles from './InputTask.module.scss'
-import { BaseBtn } from '../Buttons/Button';
-import { IconArrowDown, IconArrowUp, IconReturnArrow } from '../Icons';
+import { BaseBtn } from '../Buttons/Button'
+import { IconArrowDown, IconArrowUp, IconReturnArrow } from '../Icons'
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'
+
 interface InputTaskProps {
     description: string
     setDescription: (description: string) => void
@@ -14,12 +16,25 @@ interface InputTaskProps {
 
 const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, descriptionError, setDescriptionError, handleAddTask, handleThemeChange }) => {
     const [openMenu, setOpenMenu] = useState<boolean>(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalTitle, setModalTitle] = useState<string>("")
+    const [modalDescription, setModalDescription] = useState<string>("")
 
     const handleLocationChange = () => {
         console.log('location change to be implemented')
     }
 
-    const handleSignOut = async () => {
+    const handleSignOut = () => {
+        setIsModalOpen(true)
+        setModalTitle('Sign Out')
+        setModalDescription('Are you sure you want to sign out?')
+    }
+
+    const cancelSignout = () => {
+        setIsModalOpen(false)
+    }
+
+    const handleSignOutFunc = async () => {
         const auth = getAuth()
         try {
             await signOut(auth)
@@ -41,69 +56,78 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
     }
     
     return (
-        <div className={`${styles.inputComponent} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
-            {(descriptionError && <div className={styles.inputError}>{descriptionError}</div>)}
-            <div className={styles.inputTaskCont}>
-                <button className={styles.inputBtn} onClick={() => setOpenMenu(!openMenu)}>
-                    {openMenu 
-                        ? <IconArrowDown 
-                            height="24"
-                            width="24"
-                            // color="#000"
-                        />
-                        : <IconArrowUp 
-                            height="24"
-                            width="24"
-                            // color="#000"
-                        />
-                    }
-                </button>
-                <input
-                    className={styles.inputTask}
-                    type="text"
-                    value={description}
-                    onChange={handleInput}
-                    placeholder="Add a new task"
-                />
-                <button className={styles.inputBtn} onClick={handleAddTask}>
-                    <IconReturnArrow
-                        height="24"
-                        width="24"
-                        // color="#000"
+        <>
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onConfirm={handleSignOutFunc}
+                onCancel={cancelSignout}
+                modalTitle={modalTitle}
+                modalDescription={modalDescription}
+            />
+            <div className={`${styles.inputComponent} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
+                {(descriptionError && <div className={styles.inputError}>{descriptionError}</div>)}
+                <div className={styles.inputTaskCont}>
+                    <button className={styles.inputBtn} onClick={() => setOpenMenu(!openMenu)}>
+                        {openMenu 
+                            ? <IconArrowDown 
+                                height="24"
+                                width="24"
+                                // color="#000"
+                            />
+                            : <IconArrowUp 
+                                height="24"
+                                width="24"
+                                // color="#000"
+                            />
+                        }
+                    </button>
+                    <input
+                        className={styles.inputTask}
+                        type="text"
+                        value={description}
+                        onChange={handleInput}
+                        placeholder="Add a new task"
                     />
-                </button>
-            </div>
-            {openMenu && <div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
-                <div className={styles.themeSelectCont}>
-                    <div className={styles.title}>Theme</div>
-                    <div className={styles.themeOptions}>
-                        <div className={`${styles.themeOption} ${styles.darkMode}`} onClick={() => handleThemeChange('themeDark')}></div>
-                        <div className={`${styles.themeOption} ${styles.lightMode}`} onClick={() => handleThemeChange('themeLight')}></div>
+                    <button className={styles.inputBtn} onClick={handleAddTask}>
+                        <IconReturnArrow
+                            height="24"
+                            width="24"
+                            // color="#000"
+                        />
+                    </button>
+                </div>
+                {openMenu && <div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
+                    <div className={styles.themeSelectCont}>
+                        <div className={styles.title}>Theme</div>
+                        <div className={styles.themeOptions}>
+                            <div className={`${styles.themeOption} ${styles.darkMode}`} onClick={() => handleThemeChange('themeDark')}></div>
+                            <div className={`${styles.themeOption} ${styles.lightMode}`} onClick={() => handleThemeChange('themeLight')}></div>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.accountSettingsCont}>
-                    <div className={styles.title}>Account Settings</div>
-                    <BaseBtn 
-                        buttonType=''
-                        buttonText='Change Location'
-                        onClick={handleLocationChange}
-                        disabled={true}
-                    />
-                    <BaseBtn 
-                        buttonType=''
-                        buttonText='Sign Out'
-                        onClick={handleSignOut}
-                        disabled={false}
-                    />
-                    <BaseBtn 
-                        buttonType='delete'
-                        buttonText='Delete Account'
-                        onClick={handleDeleteAccount}
-                        disabled={true}
-                    />
-                </div>
-            </div>}
-        </div>
+                    <div className={styles.accountSettingsCont}>
+                        <div className={styles.title}>Account Settings</div>
+                        {/* <BaseBtn 
+                            buttonType=''
+                            buttonText='Change Location'
+                            onClick={handleLocationChange}
+                            disabled={true}
+                        /> */}
+                        <BaseBtn 
+                            buttonType='delete'
+                            buttonText='Sign Out'
+                            onClick={handleSignOut}
+                            disabled={false}
+                        />
+                        {/* <BaseBtn 
+                            buttonType='delete'
+                            buttonText='Delete Account'
+                            onClick={handleDeleteAccount}
+                            disabled={true}
+                        /> */}
+                    </div>
+                </div>}
+            </div>
+        </>
     )
 }
 
