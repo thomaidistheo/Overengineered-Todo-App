@@ -22,7 +22,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onConfirm
 				<div className={styles.options}>
 					<BaseBtn 
 						buttonType='delete'
-						buttonText='Yes, Delete'
+						buttonText='Confirm'
 						onClick={onConfirm}
 					/>
 					<BaseBtn 
