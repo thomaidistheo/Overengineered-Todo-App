@@ -20,10 +20,6 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
     const [modalTitle, setModalTitle] = useState<string>("")
     const [modalDescription, setModalDescription] = useState<string>("")
 
-    const handleLocationChange = () => {
-        console.log('location change to be implemented')
-    }
-
     const handleSignOut = () => {
         setIsModalOpen(true)
         setModalTitle('Sign Out')
@@ -42,10 +38,6 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
         } catch (error) {
             console.error('Error signing out:', error)
         }
-    }
-
-    const handleDeleteAccount = () => {
-        console.log('delete account to be implemented')
     }
 
     const handleInput = (e:React.FormEvent<HTMLInputElement>) => {
