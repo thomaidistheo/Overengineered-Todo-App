@@ -80,19 +80,21 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         try {
             const userDocRef = doc(db, "Users", user.uid)
             const docSnap = await getDoc(userDocRef)
-            if (!docSnap.data().taskCount) {
-                await updateDoc(userDocRef, {
-                    taskCount: 1
-                })
-                await addTask(db, user, description)
-            } else if (docSnap.data().taskCount >= 256) {
-                console.log('maximum tasks reached')
-                setDescriptionError("Maximum number of tasks reached. Delete some to add new.")
-            } else {
-                await updateDoc(userDocRef, {
-                    taskCount: docSnap.data().taskCount + 1
-                })
-                await addTask(db, user, description)
+            if (docSnap.exists()) {
+                if (!docSnap.data().taskCount) {
+                    await updateDoc(userDocRef, {
+                        taskCount: 1
+                    })
+                    await addTask(db, user, description)
+                } else if (docSnap.data().taskCount >= 256) {
+                    console.log('maximum tasks reached')
+                    setDescriptionError("Maximum number of tasks reached. Delete some to add new.")
+                } else {
+                    await updateDoc(userDocRef, {
+                        taskCount: docSnap.data().taskCount + 1
+                    })
+                    await addTask(db, user, description)
+                }
             }
 
             setDescription('')
@@ -111,10 +113,12 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         try {
             const userDocRef = doc(db, "Users", user.uid)
             const docSnap = await getDoc(userDocRef)
-            await updateDoc(userDocRef, {
-                taskCount: docSnap.data().taskCount - 1
-            })
-            await deleteTask(db, user, taskToDelete)
+            if (docSnap.exists()) {
+                await updateDoc(userDocRef, {
+                    taskCount: docSnap.data().taskCount - 1
+                })
+                await deleteTask(db, user, taskToDelete)
+            }
         } catch (error) {
             console.error('Error deleting task:', error)
         }
