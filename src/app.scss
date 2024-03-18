@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overscroll-behavior-y: none;
+}
+
 .app {
     background-color: var(--clrPrimary);
     font-family: $fontFamily;
