@@ -10,6 +10,8 @@
     padding: 16px 18px;
     background-color: var(--clrSecondary);
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
+    box-shadow: 0 -4px 0 var(--clrTertiary);
+    border: 1px solid var(--clrTertiary);
 
     &.openMenu {
         animation: slide-up-drawer .4s cubic-bezier(0.4, 0, 0.2, 1) 50ms backwards;

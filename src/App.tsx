@@ -12,6 +12,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import { changeTheme } from './dbOperations'
 
 import './app.scss';
+import Loader from './components/Loader/Loader'
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
@@ -67,7 +68,7 @@ function App() {
   return (
     <div className={`app ${theme}`}>
       {isLoading 
-      ? <h1>loading</h1>
+      ? <Loader />
       : <AuthProvider> 
           <Router>
             <Routes>

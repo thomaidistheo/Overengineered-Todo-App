@@ -5,4 +5,13 @@
     height: 100dvh;
     @include displayFlex(column, center, flex-start, 32px);
     overscroll-behavior: none;
+
+    background-color: var(--clrSecondary);
+    opacity: 1;
+    background-image:  linear-gradient(var(--clrPrimary) 2.4000000000000004px, transparent 2.4000000000000004px), linear-gradient(90deg, var(--clrPrimary) 2.4000000000000004px, transparent 2.4000000000000004px), linear-gradient(var(--clrPrimary) 1.2000000000000002px, transparent 1.2000000000000002px), linear-gradient(90deg, var(--clrPrimary) 1.2000000000000002px, var(--clrSecondary) 1.2000000000000002px);
+    background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
+    background-position: -2.4000000000000004px -2.4000000000000004px, -2.4000000000000004px -2.4000000000000004px, -1.2000000000000002px -1.2000000000000002px, -1.2000000000000002px -1.2000000000000002px;
+
+    background-size: 20px 20px, 20px 20px, 4px 4px, 4px 4px;
+    background-position: -0.8px -0.8px, -0.8px -0.8px, -0.4px -0.4px, -0.4px -0.4px;
 }

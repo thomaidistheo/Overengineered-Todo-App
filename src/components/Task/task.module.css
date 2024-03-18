@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+html {
+  color-scheme: light dark auto;
+}
+
+.themeLight {
+  --clrPrimary: #EFEFEF;
+  --clrSecondary: #FFF;
+  --clrTertiary: #f1f1f1;
+  --clrAccent-100: #000;
+  --clrAccent-60: rgba(0, 0, 0, 0.6);
+  --clrAccent-30: rgba(0, 0, 0, 0.3);
+  --clrAccent-10: rgba(0, 0, 0, 0.1);
+}
+
+.themeDark {
+  --clrPrimary: #0A0A0A;
+  --clrSecondary: #111;
+  --clrTertiary: #333;
+  --clrAccent-100: #FFFFFF;
+  --clrAccent-60: rgba(198, 198, 198, 0.6);
+  --clrAccent-30: rgba(145, 145, 145, 0.3);
+  --clrAccent-10: rgba(255, 255, 255, 0.1);
+}
+
+:root {
+  --clrPrimary: #EFEFEF;
+  --clrSecondary: #FFF;
+  --clrTertiary: #f1f1f1;
+  --clrAccent-100: #FFFFFF;
+  --clrAccent-60: rgba(198, 198, 198, 0.6);
+  --clrAccent-30: rgba(145, 145, 145, 0.3);
+  --clrAccent-10: rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --clrAccent-100: #000;
+    --clrAccent-60: rgba(0, 0, 0, 0.6);
+    --clrAccent-30: rgba(0, 0, 0, 0.3);
+    --clrAccent-10: rgba(0, 0, 0, 0.1);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clrPrimary: #0A0A0A;
+    --clrSecondary: #111;
+    --clrTertiary: #333;
+    --clrAccent-100: #FFFFFF;
+    --clrAccent-60: rgba(198, 198, 198, 0.6);
+    --clrAccent-30: rgba(145, 145, 145, 0.3);
+    --clrAccent-10: rgba(255, 255, 255, 0.1);
+  }
+}
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+@keyframes slide-down {
+  100% {
+    -webkit-transform: translateY(100%);
+  }
+  0% {
+    -webkit-transform: translateY(0);
+  }
+}
+@keyframes slide-up-drawer {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(calc(100% - 90px));
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+@keyframes slide-down-drawer {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(calc(100% - 318px + 90px));
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    display: none;
+  }
+}
+.taskItem {
+  width: 100%;
+  background-color: var(--clrSecondary);
+  color: var(--clrAccent-60);
+  max-width: 520px;
+  padding: 8px 16px;
+  border: 1px solid var(--clrTertiary);
+  border-radius: 8px;
+  box-shadow: 0 4px 0 var(--clrTertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  transition: all 200ms ease-in-out;
+}
+.taskItem:hover {
+  box-shadow: 0 7px 0 var(--clrTertiary);
+}
+.taskItem .taskTime {
+  font-size: 12px;
+  opacity: 0.5;
+}
+.taskItem .task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+.taskItem .task .completionState {
+  min-width: 18px;
+  min-height: 18px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--clrAccent-30);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+  transition: all 150ms ease-in-out;
+}
+.taskItem .task .completionState.completed {
+  background-color: var(--clrAccent-30);
+}
+.taskItem .task .taskDescription {
+  font-size: 16px;
+  width: 100%;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+          hyphens: auto;
+}
+.taskItem .task .taskDescription.completed {
+  text-decoration: line-through;
+}
+.taskItem .task .taskOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.taskItem .task .taskOptions .flagIcon,
+.taskItem .task .taskOptions .deleteIcon,
+.taskItem .task .taskOptions .urgencyIcon {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+  transition: background-color 150ms ease-in-out;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: var(--clrAccent-30);
+}
+.taskItem .task .taskOptions .flagIcon:hover,
+.taskItem .task .taskOptions .deleteIcon:hover,
+.taskItem .task .taskOptions .urgencyIcon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.taskItem .task .taskOptions .flagIcon svg,
+.taskItem .task .taskOptions .deleteIcon svg,
+.taskItem .task .taskOptions .urgencyIcon svg {
+  height: 24px;
+  width: 24px;
+  color: var(--clrAccent-30);
+}
+.taskItem .task .taskOptions .flagIcon.flagged svg,
+.taskItem .task .taskOptions .deleteIcon.flagged svg,
+.taskItem .task .taskOptions .urgencyIcon.flagged svg {
+  color: rgb(218, 115, 32);
+}
+.taskItem .task .taskOptions .flagIcon.mediumUrgency,
+.taskItem .task .taskOptions .deleteIcon.mediumUrgency,
+.taskItem .task .taskOptions .urgencyIcon.mediumUrgency {
+  color: rgb(218, 115, 32);
+}
+.taskItem .task .taskOptions .flagIcon.highUrgency,
+.taskItem .task .taskOptions .deleteIcon.highUrgency,
+.taskItem .task .taskOptions .urgencyIcon.highUrgency {
+  color: #d84848;
+  text-shadow: 0px 0px 15px #d84848;
+}/*# sourceMappingURL=task.module.css.map */
