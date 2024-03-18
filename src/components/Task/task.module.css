@@ -23,6 +23,16 @@ html {
   --clrAccent-10: rgba(255, 255, 255, 0.1);
 }
 
+.themePurple {
+  --clrPrimary: #9a26ea;
+  --clrSecondary: #45347e;
+  --clrTertiary: #be6aef;
+  --clrAccent-100: #000;
+  --clrAccent-60: rgba(198, 198, 198, 0.6);
+  --clrAccent-30: rgba(0, 0, 0, 0.3);
+  --clrAccent-10: rgba(0, 0, 0, 0.1);
+}
+
 :root {
   --clrPrimary: #EFEFEF;
   --clrSecondary: #FFF;

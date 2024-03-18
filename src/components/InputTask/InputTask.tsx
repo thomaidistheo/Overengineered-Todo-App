@@ -94,6 +94,7 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                         <div className={styles.themeOptions}>
                             <div className={`${styles.themeOption} ${styles.darkMode}`} onClick={() => handleThemeChange('themeDark')}></div>
                             <div className={`${styles.themeOption} ${styles.lightMode}`} onClick={() => handleThemeChange('themeLight')}></div>
+                            <div className={`${styles.themeOption} ${styles.purpleMode}`} onClick={() => handleThemeChange('themePurple')}></div>
                         </div>
                     </div>
                     <div className={styles.accountSettingsCont}>

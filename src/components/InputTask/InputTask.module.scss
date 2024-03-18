@@ -136,6 +136,11 @@
                         background: rgb(255, 255, 255);
                         background: linear-gradient(90deg, rgb(255, 255, 255) 20%, rgb(192, 199, 202, 1) 100%);
                     }
+                    
+                    &.purpleMode {
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(90deg, rgb(197, 83, 193) 20%, rgb(166, 86, 220) 100%);
+                    }
                 }
             }
         }

@@ -39,6 +39,17 @@ $clrError: red;
     --clrAccent-10: #{$white-10};
 }
 
+.themePurple {
+    --clrPrimary: #9a26ea;
+    --clrSecondary: #45347e;
+    --clrTertiary: #be6aef; 
+
+    --clrAccent-100: #{$black-100};
+    --clrAccent-60: #{$white-60};
+    --clrAccent-30: #{$black-30};
+    --clrAccent-10: #{$black-10};
+}
+
 :root {
     --clrPrimary: #EFEFEF;
     --clrSecondary: #FFF;
