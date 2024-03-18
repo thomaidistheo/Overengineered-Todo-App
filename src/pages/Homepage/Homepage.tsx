@@ -6,6 +6,7 @@ import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
 import InputTask from '../../components/InputTask/InputTask'
 import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'
+import Loader from '../../components/Loader/Loader'
 
 import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
 
@@ -35,6 +36,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
     const [modalTitle, setModalTitle] = useState<string>("")
     const [modalDescription, setModalDescription] = useState<string>("")
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const navigate = useNavigate()
 
@@ -54,6 +56,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                         } as Task
                     })
                 setTasks(tasksArray)
+                setIsLoading(false)
             })
 
             return () => unsubscribe()
@@ -169,7 +172,10 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     tasks.sort(compare)
 
     return (
-        <div className={styles.homepage}>
+        <>
+        {isLoading 
+        ? <Loader />
+        : <div className={styles.homepage}>
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onConfirm={confirmDeleteTask}
@@ -193,6 +199,9 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                 handleThemeChange={handleThemeChange}
             />
         </div>
+            }
+        </>
+        
     )
 }
 
