@@ -5,6 +5,7 @@ import { useAuth } from '../../AuthContext'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
 import InputTask from '../../components/InputTask/InputTask'
+import ListButtons from '../../components/ListButtons/ListButtons'
 import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'
 import Loader from '../../components/Loader/Loader'
 
@@ -37,6 +38,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     const [modalTitle, setModalTitle] = useState<string>("")
     const [modalDescription, setModalDescription] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [activeList, setActiveList] = useState<'TODO' | 'DONE'>('TODO')
 
     const navigate = useNavigate()
 
@@ -62,6 +64,10 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
             return () => unsubscribe()
         }
     }, [user])
+
+    const handleActiveListChange = (button: 'TODO' | 'DONE') => {
+        setActiveList(button)
+    }
 
     const handleAddTask = async () => {
         if (!user) {
@@ -208,12 +214,17 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                 modalTitle={modalTitle}
                 modalDescription={modalDescription}
             />
+            <ListButtons
+                activeList={activeList}
+                onActiveListChange={handleActiveListChange}
+            />
             <TaskList
                 tasks={tasks}
                 onToggleComplete={handleComplete}
                 onToggleFlag={handleFlag}
                 onUrgencyChange={handleChangeUrgency}
                 onDeleteTask={handleDeleteTask}
+                activeList={activeList}
             />
             <InputTask 
                 description={description}

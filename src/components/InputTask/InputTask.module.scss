@@ -28,7 +28,7 @@
         width: 100%;
         max-width: $maxWidthDesktop;
         padding: 12px;
-        border: 1px solid var(--clrTertiary);
+        border: 2px solid var(--clrTertiary);
         border-radius: $borderRadiusNormal;
     
         .inputTask {
@@ -54,7 +54,8 @@
         .inputBtn {
             width: 32px;
             height: 32px;
-            background-color: var(--clrTertiary);
+            // background-color: var(--clrTertiary);
+            background-color: transparent;
             border: none;
             border-radius: $borderRadiusSmall;
             transition: background-color 150ms ease-in-out;
@@ -62,7 +63,8 @@
             padding: 4px;
 
             &:hover {
-                background-color: var(--clrAccent-30);
+                // background-color: var(--clrAccent-30);
+                background-color: var(--clrTertiary);
             }
             
             &:active {
