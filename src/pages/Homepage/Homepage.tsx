@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom' 
-import { Firestore, collection, query, onSnapshot, getFirestore, Timestamp } from 'firebase/firestore'
+import { Firestore, collection, query, onSnapshot, getFirestore, Timestamp, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useAuth } from '../../AuthContext'
 import TaskList from '../../components/TaskList/TaskList'
 import Task from '../../components/Task/Task'
@@ -78,7 +78,23 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         }
 
         try {
-            await addTask(db, user, description)
+            const userDocRef = doc(db, "Users", user.uid)
+            const docSnap = await getDoc(userDocRef)
+            if (!docSnap.data().taskCount) {
+                await updateDoc(userDocRef, {
+                    taskCount: 1
+                })
+                await addTask(db, user, description)
+            } else if (docSnap.data().taskCount >= 256) {
+                console.log('maximum tasks reached')
+                setDescriptionError("Maximum number of tasks reached. Delete some to add new.")
+            } else {
+                await updateDoc(userDocRef, {
+                    taskCount: docSnap.data().taskCount + 1
+                })
+                await addTask(db, user, description)
+            }
+
             setDescription('')
         } catch (error) {
             console.log('Error adding new task: ', error)
@@ -93,6 +109,11 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         }
 
         try {
+            const userDocRef = doc(db, "Users", user.uid)
+            const docSnap = await getDoc(userDocRef)
+            await updateDoc(userDocRef, {
+                taskCount: docSnap.data().taskCount - 1
+            })
             await deleteTask(db, user, taskToDelete)
         } catch (error) {
             console.error('Error deleting task:', error)
