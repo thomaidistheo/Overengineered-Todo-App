@@ -1,0 +1,15 @@
+@import '../../styles/imports';
+
+.weatherDayCont {
+    color: var(--clrAccent-60);
+    width: 52px;
+    font-size: 14px;
+    @include displayFlex(column, center, center, 2px);
+
+    .icon {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}

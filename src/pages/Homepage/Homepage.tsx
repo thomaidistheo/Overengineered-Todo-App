@@ -12,6 +12,7 @@ import Loader from '../../components/Loader/Loader'
 import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
 
 import styles from './homepage.module.scss'
+import Weather from '../../components/Weather/Weather'
 
 const db: Firestore = getFirestore()
 
@@ -214,6 +215,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                 modalTitle={modalTitle}
                 modalDescription={modalDescription}
             />
+            <Weather />
             <ListButtons
                 activeList={activeList}
                 onActiveListChange={handleActiveListChange}

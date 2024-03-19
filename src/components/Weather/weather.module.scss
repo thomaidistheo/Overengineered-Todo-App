@@ -1,0 +1,19 @@
+@import '../../styles/imports';
+
+.weatherCont {
+    background-color: var(--clrSecondary);
+    padding: 16px 32px;
+    border: 1px solid var(--clrTertiary);
+    border-radius: $borderRadiusNormal;
+    @include displayFlex(row, center, space-evenly, 16px);
+    margin: 16px 0 16px 0;
+    width: 100%;
+    max-width: 520px;
+    color: var(--clrAccent-30);
+    
+    .today {
+        border: 1px solid var(--clrTertiary);
+        border-radius: $borderRadiusNormal;
+        padding: 4px;
+    }
+}
