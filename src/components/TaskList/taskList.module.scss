@@ -3,9 +3,10 @@
 .taskList {
     width: 100%;
     max-width: 520px;
-    max-height: calc(100dvh - 156px);
+    max-height: calc(100dvh - 318px);
     overflow-y: auto;
     padding: 16px 0px;
+    position: relative;
 
     @media (max-width: $mobile) {
         // position: fixed;
