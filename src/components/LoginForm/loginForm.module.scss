@@ -1,0 +1,90 @@
+@import '../../styles/imports';
+
+.loginCont {
+    background-color: var(--clrPrimary);
+    width: 100%;
+    max-width: 520px;
+    padding: 64px;
+    border-radius: $borderRadiusNormal;
+    box-shadow: 0 -4px 0 var(--clrTertiary);
+
+    @media (max-width: $mobile) {
+        padding: 32px;
+    }
+
+    h2 {
+        font-size: $fontSizeLarge;
+        color: var(--clrAccent-60);
+        margin-bottom: 32px;
+    }
+
+    form {
+        @include displayFlex(column, flex-start, center, 32px);
+        
+        .inputs {
+            @include displayFlex(column, flex-start, center, 16px);
+            width: 100%;
+
+            .inputCont {
+                @include displayFlex(column, flex-start, center, 16px);
+                width: 100%;
+                color: var(--clrAccent-30);
+                position: relative;
+                
+                label {
+                    font-size: $fontSizeSmall;
+                    background-color: var(--clrPrimary);
+                    padding: 0 8px;
+                    position: absolute;
+                    top: -6px;
+                    left: 16px;
+                }
+    
+                input {
+                    width: 100%;
+                    background-color: transparent;
+                    border: 2px solid var(--clrTertiary);
+                    border-radius: $borderRadiusNormal;
+                    padding: 16px;
+                    outline: none;
+                    color: var(--clrAccent-60);
+                    font-size: $fontSizeBase;
+                }
+            }
+        }
+
+        .btnCont {
+            width: 100%;
+        }
+    }
+
+    .googleBtn {
+        margin: 0 auto;
+        margin-top: 16px;
+        background-color: #FFF;
+        border: none;
+        border-radius: $borderRadiusNormal;
+        padding: 16px;
+        cursor: pointer;
+        color: var(--clrAccent-60);
+        @include displayFlex(row, flex-start, center, 8px);
+        font-size: $fontSizeBase;
+        font-weight: 500;
+        transition: all 150ms ease-in-out;
+
+        &:active {
+            transform: scale(0.98);
+        }
+        
+        @media (max-width: $mobile) {
+            width: 100%;
+        }
+
+        .googleIconCont {
+            img {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}

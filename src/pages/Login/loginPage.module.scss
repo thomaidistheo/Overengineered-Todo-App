@@ -1,0 +1,34 @@
+@import '../../styles/imports';
+
+.loginPageCont {
+    height: 100dvh;
+    background-color: var(--clrPrimary);
+    background: linear-gradient(45deg, var(--clrAccent-10) 0%, var(--clrAccent-10) 5%,transparent 5%, transparent 10%, var(--clrAccent-10) 10%, var(--clrAccent-10) 15%,transparent 15%,transparent 20%, var(--clrAccent-10) 20%, var(--clrAccent-10) 25%,transparent 25%,transparent 30%, var(--clrAccent-10) 30%, var(--clrAccent-10) 35%,transparent 35%,transparent 40%, var(--clrAccent-10) 40%, var(--clrAccent-10) 45%,transparent 45%,transparent 50%, var(--clrAccent-10) 50%, var(--clrAccent-10) 55%,transparent 55%,transparent 60%, var(--clrAccent-10) 60%, var(--clrAccent-10) 65%,transparent 65%,transparent 70%, var(--clrAccent-10) 70%, var(--clrAccent-10) 75%,transparent 70%,transparent 80%, var(--clrAccent-10) 80%, var(--clrAccent-10) 85%,transparent 85%,transparent 90%, var(--clrAccent-10) 90%, var(--clrAccent-10) 95%,transparent 95%);
+    background-size: 3em 3em;
+    opacity: 1;
+
+    @include displayFlex(column, center, center, 0);
+
+    @media (max-width: $mobile) {
+        @include displayFlex(column, center, flex-end, 0);
+    }
+
+    .switchPage {
+        padding: 16px;
+        color: var(--clrAccent-60);
+        font-size: $fontSizeBase;
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: var(--clrAccent-100);
+            font-size: $fontSizeBase;
+            cursor: pointer;
+            margin-left: 8px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

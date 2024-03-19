@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { User, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, getAuth } from 'firebase/auth'
 import { doc, setDoc, getFirestore } from 'firebase/firestore'
+import { BaseBtn } from '../Buttons/Button'
+
+import styles from './loginForm.module.scss'
+import googleIcon from '../../assets/icons/google.webp'
 
 const SignUpForm: React.FC = () => {
     const [email, setEmail] = useState('')
@@ -25,11 +29,10 @@ const SignUpForm: React.FC = () => {
     }
 
     const isErrorWithMessage = (error: unknown): error is { message: string } => {
-        return typeof error === 'object' && error !== null && 'message' in error;
+        return typeof error === 'object' && error !== null && 'message' in error
     }
 
-    const handleSignUpWithEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSignUpWithEmail = async () => {
         if (!validateEmail(email)) {
             setError("A valid email must be entered")
             return
@@ -71,10 +74,10 @@ const SignUpForm: React.FC = () => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = await signInWithPopup(auth, provider) as any
-            const user: User = result.user;
+            const user: User = result.user
 
             if (result.additionalUserInfo?.isNewUser) {
-                const userDocRef = doc(db, 'Users', user.uid);
+                const userDocRef = doc(db, 'Users', user.uid)
                 await setDoc(userDocRef, {
                     email: user.email,
                     signUpDate: new Date(),
@@ -93,25 +96,40 @@ const SignUpForm: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className={styles.loginCont}>
             <h2>Sign Up</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className={styles.errorMsg}>{error}</p>}
             <form onSubmit={handleSignUpWithEmail}>
-                <div>
-                    <label>Email</label>
-                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <div className={styles.inputs}>
+                    <div className={styles.inputCont}>
+                        <label>Email</label>
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className={styles.inputCont}>
+                        <label>Password</label>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </div>
+                    <div className={styles.inputCont}>
+                        <label>Confirm Password</label>
+                        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    </div>
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <div className={styles.btnCont}>
+                    <BaseBtn 
+                        buttonType=''
+                        buttonText='Sign Up'
+                        onClick={handleSignUpWithEmail}
+                        disabled={false}
+                    />
+                    <button className={styles.googleBtn} onClick={handleSignUpWithGoogle}>
+                        <span className={styles.googleIconCont}>
+                            <img src={googleIcon} alt="google" />
+                        </span>
+                        Sign Up with Google
+                    </button>
                 </div>
-                <div>
-                    <label>Confirm Password</label>
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                </div>
-                <button type="submit">Sign Up with Email</button>
             </form>
-            <button onClick={handleSignUpWithGoogle}>Sign Up with Google</button>
+            
         </div>
     )
 }

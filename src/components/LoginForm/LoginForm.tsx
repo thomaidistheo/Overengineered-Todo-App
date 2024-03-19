@@ -1,22 +1,25 @@
 import { useState } from 'react'
 import { getAuth, signInWithPopup, GoogleAuthProvider, fetchSignInMethodsForEmail } from 'firebase/auth'
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from '../../firebase'
+import { BaseBtn } from '../Buttons/Button'
+
+import styles from './loginForm.module.scss'
+import googleIcon from '../../assets/icons/google.webp'
 
 const LoginForm: React.FC = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
-    const auth = getAuth();
+    const auth = getAuth()
 
     const validateEmail = (email: string) => {
-        const regexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regexPattern.test(email);
-    };
+        const regexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return regexPattern.test(email)
+    }
 
-    const handleSignInWithEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSignInWithEmail = async () => {
         if (!validateEmail(email)) {
             setError('A valid email must be entered')
         }  else {
@@ -28,9 +31,9 @@ const LoginForm: React.FC = () => {
                 setError('Account does not exist.')
             })
             .catch((error) => {
-                console.error("There was an error while trying to sign in: ", error);
+                console.error("There was an error while trying to sign in: ", error)
                 setError("There was an error while trying to sign in")
-            });
+            })
     }
 
     const handleSignInWithGoogle = async () => {
@@ -60,21 +63,35 @@ const LoginForm: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className={styles.loginCont}>
             <h2>Sign In</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSignInWithEmail}>
-                <div>
-                    <label>Email</label>
-                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <div className={styles.inputs}>
+                    <div className={styles.inputCont}>
+                        <label>Email</label>
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className={styles.inputCont}>
+                        <label>Password</label>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </div>
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <div className={styles.btnCont}>
+                    <BaseBtn 
+                        buttonType=''
+                        buttonText='Sign In'
+                        onClick={handleSignInWithEmail}
+                        disabled={false}
+                    />
+                    <button className={styles.googleBtn} onClick={handleSignInWithGoogle}>
+                        <span className={styles.googleIconCont}>
+                            <img src={googleIcon} alt="google" />
+                        </span>
+                        Sign In with Google
+                    </button>
                 </div>
-                <button type="submit">Sign In with Email</button>
             </form>
-            <button onClick={handleSignInWithGoogle}>Sign In with Google</button>
         </div>
     )
 }
