@@ -50,9 +50,17 @@ const useFetchWeatherData = (query: string) => {
     const [data, setData] = useState<WeatherForecastProps | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
-
+    
+    console.log('Fetching data for: ', query)
+    console.log(`https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHERAPI_KEY}&q=${query}&days=5&aqi=no&alerts=no`)
+    
     useEffect(() => {
         const fetchWeather = async () => {
+            if (!query) {
+                setLoading(false);
+                return; // Early return if query is empty
+            }
+            
             setLoading(true)
             try {
                 const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHERAPI_KEY}&q=${query}&days=5&aqi=no&alerts=no`)
@@ -82,7 +90,20 @@ const useFetchWeatherData = (query: string) => {
 
 // Example component using the custom hook
 const Weather: React.FC = () => {
-    const { data, loading, error } = useFetchWeatherData('Attiki')
+    const [locationQuery, setLocationQuery] = useState('');
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            setLocationQuery(`${latitude},${longitude}`);
+        }, (err) => {
+            console.error(err);
+            setLocationQuery('fallback location'); // Use a fallback location or handle error
+        });
+    }, []);
+
+    const { data, loading, error } = useFetchWeatherData(locationQuery)
+    console.log('locationQuery: ', locationQuery)
 
     const currentDate = new Date().toDateString();
 
