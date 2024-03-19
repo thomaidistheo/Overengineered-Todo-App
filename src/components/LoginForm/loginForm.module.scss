@@ -10,12 +10,18 @@
 
     @media (max-width: $mobile) {
         padding: 32px;
+        height: 50%;
     }
 
     h2 {
         font-size: $fontSizeLarge;
         color: var(--clrAccent-60);
         margin-bottom: 32px;
+    }
+
+    .errorMsg {
+        margin-bottom: 16px;
+        color: $clrError-100;
     }
 
     form {

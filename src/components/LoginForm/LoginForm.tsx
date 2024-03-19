@@ -65,7 +65,7 @@ const LoginForm: React.FC = () => {
     return (
         <div className={styles.loginCont}>
             <h2>Sign In</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className={styles.errorMsg}>{error}</p>}
             <form onSubmit={handleSignInWithEmail}>
                 <div className={styles.inputs}>
                     <div className={styles.inputCont}>
