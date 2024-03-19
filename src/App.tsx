@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PageNotFound from './pages/PageNotFound/PageNotFound'
 import Homepage from './pages/Homepage/Homepage'
 import LoginPage from './pages/Login/LoginPage'
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthProvider } from './AuthContext'
 import { db} from './firebase'
 import { User, getAuth } from 'firebase/auth'
@@ -16,8 +16,24 @@ import Loader from './components/Loader/Loader'
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
-  const [theme, setTheme] =  useState<string>('themeLight')
-  
+  const [theme, setTheme] = useState<'themeLight' | 'themeDark' | string>('themeLight');
+
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleThemeChange = (e: MediaQueryListEvent) => {
+      setTheme(e.matches ? 'themeDark' : 'themeLight');
+    };
+
+    darkModeMediaQuery.addEventListener('change', handleThemeChange);
+
+    // Set the initial theme based on the prefers-color-scheme media query
+    setTheme(darkModeMediaQuery.matches ? 'themeDark' : 'themeLight');
+
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', handleThemeChange);
+    };
+  }, []);
+
   const auth = getAuth()
 
   const handleThemeChange = async (themeSelect: string) => {
@@ -36,7 +52,7 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser);
       setIsLoading(true)
@@ -57,7 +73,7 @@ function App() {
           console.log('Error fetching user data: ', error)
         }
       } else {
-        setTheme('themeLight')
+        console.log('theme set to browser default')
       }
       setIsLoading(false)
     });
