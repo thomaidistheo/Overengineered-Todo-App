@@ -4,12 +4,12 @@
     background-color: var(--clrPrimary);
     width: 100%;
     max-width: 520px;
-    padding: 64px;
-    border-radius: $borderRadiusNormal;
+    padding: 64px 64px 16px 64px;
+    border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
     box-shadow: 0 -4px 0 var(--clrTertiary);
 
     @media (max-width: $mobile) {
-        padding: 32px;
+        padding: 32px 32px 16px 32px;
         min-height: 50%;
     }
 

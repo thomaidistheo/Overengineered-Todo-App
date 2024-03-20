@@ -44,7 +44,7 @@ const SignUpForm: React.FC = () => {
             setError("Password must be at least 8 characters long and include one symbol and one number")
             return
         } else if (password !== confirmPassword) {
-            setError("Passwords do not match")
+            setError("")
             return
         } else {
             setError("")

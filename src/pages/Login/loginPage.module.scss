@@ -17,6 +17,17 @@
         padding: 16px;
         color: var(--clrAccent-60);
         font-size: $fontSizeBase;
+        background-color: var(--clrPrimary);
+        width: 100%;
+        max-width: 520px;
+        border-radius: 0 0 $borderRadiusNormal $borderRadiusNormal;
+        text-align: center;
+        border-top: 1px dashed var(--clrAccent-30);
+
+        @media (max-width: $mobile) {
+            border-radius: 0;
+            padding-bottom: 32px;
+        }
 
         button {
             background-color: transparent;
