@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getAuth, signInWithPopup, GoogleAuthProvider, fetchSignInMethodsForEmail } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth'
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from '../../firebase'
 import { BaseBtn } from '../Buttons/Button'
@@ -20,20 +20,21 @@ const LoginForm: React.FC = () => {
     }
 
     const handleSignInWithEmail = async () => {
-        if (!validateEmail(email)) {
-            setError('A valid email must be entered')
-        }  else {
-            setError('')
-        }
 
-        fetchSignInMethodsForEmail(auth, email)
-            .then(() => {
-                setError('Account does not exist.')
-            })
-            .catch((error) => {
-                console.error("There was an error while trying to sign in: ", error)
-                setError("There was an error while trying to sign in")
-            })
+        if (!validateEmail(email) || (email == '')) {
+            setError('A valid email must be entered')
+            return
+        }
+            
+        try {
+            await signInWithEmailAndPassword(auth, email, password)
+            setError('')
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error('There was an error while trying to sign in: ', error.message);
+                setError('Failed to sign in. Please check your email and password.');
+            }
+        }
     }
 
     const handleSignInWithGoogle = async () => {
@@ -44,6 +45,7 @@ const LoginForm: React.FC = () => {
             const user = result.user
             const userDocRef = doc(db, "Users", user.uid)
             const docSnap = await getDoc(userDocRef)
+            
             if (!docSnap.exists()) {
                 await setDoc(userDocRef, {
                     email: user.email,
@@ -66,7 +68,7 @@ const LoginForm: React.FC = () => {
         <div className={styles.loginCont}>
             <h2>Sign In</h2>
             {error && <p className={styles.errorMsg}>{error}</p>}
-            <form onSubmit={handleSignInWithEmail}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSignInWithEmail() }}>
                 <div className={styles.inputs}>
                     <div className={styles.inputCont}>
                         <label>Email</label>
@@ -81,10 +83,10 @@ const LoginForm: React.FC = () => {
                     <BaseBtn 
                         buttonType=''
                         buttonText='Sign In'
-                        onClick={handleSignInWithEmail}
+                        onClick={() => handleSignInWithEmail}
                         disabled={false}
                     />
-                    <button className={styles.googleBtn} onClick={handleSignInWithGoogle}>
+                    <button type="button" className={styles.googleBtn} onClick={handleSignInWithGoogle}>
                         <span className={styles.googleIconCont}>
                             <img src={googleIcon} alt="google" />
                         </span>

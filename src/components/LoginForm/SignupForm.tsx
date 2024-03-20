@@ -99,7 +99,7 @@ const SignUpForm: React.FC = () => {
         <div className={styles.loginCont}>
             <h2>Sign Up</h2>
             {error && <p className={styles.errorMsg}>{error}</p>}
-            <form onSubmit={handleSignUpWithEmail}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSignUpWithEmail() }}>
                 <div className={styles.inputs}>
                     <div className={styles.inputCont}>
                         <label>Email</label>
