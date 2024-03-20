@@ -1,12 +1,7 @@
 // Name of the cache
 const CACHE_NAME = 'v1';
 // Files you want to cache
-const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles/main.css',
-    '/script/main.js',
-];
+const urlsToCache = []
 
 self.addEventListener('install', event => {
     // Perform install steps
