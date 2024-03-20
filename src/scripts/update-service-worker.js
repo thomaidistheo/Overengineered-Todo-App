@@ -1,11 +1,12 @@
 // update-service-worker.js
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const distPath = path.join(__dirname, 'dist');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const serviceWorkerPath = path.join(__dirname, 'dist', 'service-worker.js'); // Path to the original service worker
 
-fs.readdir(distPath, (err, files) => {
+fs.readdir(__dirname, (err, files) => {
     if (err) throw new Error(`Could not read dist directory: ${err}`);
 
     // Filter out files to cache
