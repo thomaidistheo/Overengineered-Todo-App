@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 // import WeatherDay from '../WeatherDay/WeatherDay'
-import styles from './weather.module.scss'
 import WeatherDay from '../WeatherDay/WeatherDay'
+import { IconArrowDown, IconArrowUp } from '../Icons'
+import styles from './weather.module.scss'
 
 interface FetchError {
     message: string
@@ -91,6 +92,7 @@ const useFetchWeatherData = (query: string) => {
 // Example component using the custom hook
 const Weather: React.FC = () => {
     const [locationQuery, setLocationQuery] = useState('');
+    const [weatherOpen, setWeatherOpen] = useState<boolean>(true)
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position => {
@@ -108,14 +110,14 @@ const Weather: React.FC = () => {
     const currentDate = new Date().toDateString();
 
     return (
-        <div className={styles.weatherCont}>
+        <div className={`${styles.weatherCont} ${weatherOpen ? styles.weatherVisible : styles.weatherNotVisible}`}>
             {
                 loading 
                     ? 'Loading...' 
                     : error ? `${error}`
                     : (!data) ? 'No data found.'
-                    : <>
-                        <div className={styles.today}>
+                    : weatherOpen && <div className={styles.weather}>
+                        <div className={`${styles.today}`}>
                             <WeatherDay 
                                 dataDate={currentDate}
                                 avgtemp_c={data.current.temp_c}
@@ -135,9 +137,22 @@ const Weather: React.FC = () => {
                                 condition={day.day.condition.text}
                             />
                         ))}
-                    </> 
+                    </div> 
             }
-            
+            <button className={styles.weatherBtn} onClick={() => setWeatherOpen(!weatherOpen)}>
+                {!weatherOpen 
+                    ? <IconArrowDown 
+                        height="24"
+                        width="24"
+                        // color="#000"
+                    />
+                    : <IconArrowUp 
+                        height="24"
+                        width="24"
+                        // color="#000"
+                    />
+                }
+            </button>
         </div>
     )
 }
