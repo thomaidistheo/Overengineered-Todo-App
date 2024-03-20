@@ -15,9 +15,8 @@
         margin-top: 0;
         border-radius: 0 0 $borderRadiusNormal $borderRadiusNormal;
         padding: 16px 4px;
-        border-top: none;
-        border-right: none;
-        border-left: none;
+        border: none;
+        background-color: transparent;
     }
     
     .today {
