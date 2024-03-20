@@ -1,35 +1,33 @@
-// update-service-worker.js
-import fs from 'fs';
+// Using ESM syntax
+import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const serviceWorkerPath = path.join(__dirname, 'dist', 'service-worker.js'); // Path to the original service worker
+// Construct __dirname equivalent since it's not available in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-fs.readdir(__dirname, (err, files) => {
-    if (err) throw new Error(`Could not read dist directory: ${err}`);
+const distPath = path.join(__dirname, '../dist'); // Adjust according to actual path
+const serviceWorkerPath = path.join(distPath, 'service-worker.js');
 
-    // Filter out files to cache
-    const urlsToCache = files.filter(file => /\.(html|js|css|png|jpg|jpeg|webp|svg|ico|json)$/.test(file))
-        .map(file => `/assets/${file}`); // Adjust this if your build puts assets in different subfolders
+async function updateServiceWorker() {
+    try {
+        const files = await fs.readdir(distPath);
 
-    // Generate the code snippet to update the urlsToCache array
-    const cacheCodeSnippet = `const urlsToCache = ${JSON.stringify(urlsToCache, null, 2)};`;
+        const urlsToCache = files
+            .filter(file => /\.(html|js|css|png|jpg|jpeg|webp|svg|ico|json)$/.test(file))
+            .map(file => `/assets/${file}`); // Adjust this if your build puts assets in different subfolders
 
-    // Read the existing service worker file
-    fs.readFile(serviceWorkerPath, 'utf8', (readErr, serviceWorkerContent) => {
-        if (readErr) throw new Error(`Could not read service worker file: ${readErr}`);
+        const cacheCodeSnippet = `const urlsToCache = ${JSON.stringify(urlsToCache, null, 2)};`;
 
-        // Replace the urlsToCache array in the service worker file
-        const updatedServiceWorkerContent = serviceWorkerContent.replace(
-            /const urlsToCache = \[.*?\];/s,
-            cacheCodeSnippet
-        );
+        let serviceWorkerContent = await fs.readFile(serviceWorkerPath, 'utf8');
+        serviceWorkerContent = serviceWorkerContent.replace(/const urlsToCache = \[.*?\];/s, cacheCodeSnippet);
 
-        // Write the updated service worker back to the file system
-        fs.writeFile(serviceWorkerPath, updatedServiceWorkerContent, 'utf8', (writeErr) => {
-            if (writeErr) throw new Error(`Could not write to service worker file: ${writeErr}`);
-            console.log('Service worker updated with cached URLs.');
-        });
-    });
-});
+        await fs.writeFile(serviceWorkerPath, serviceWorkerContent, 'utf8');
+        console.log('Service worker updated with cached URLs.');
+    } catch (error) {
+        console.error(`Failed to update service worker: ${error}`);
+    }
+}
+
+updateServiceWorker();
