@@ -1,6 +1,11 @@
 {
     "name": "DONE",
     "short_name": "DONE",
+    "description": "An awesome app doing awesome things",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000",
+    "theme_color": "#0D355A",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +18,6 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#0D355A",
-    "background_color": "#0D355A",
-    "display-mode": "minimal-ui"
+    "orientation": "portrait",
+    "viewport": "width=device-width, initial-scale=1, user-scalable=no"
 }
