@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const distPath = path.join(__dirname, 'dist');
-const serviceWorkerPath = path.join(__dirname, 'service-worker.js'); // Path to the original service worker
+const serviceWorkerPath = path.join(__dirname, 'dist', 'service-worker.js'); // Path to the original service worker
 
 fs.readdir(distPath, (err, files) => {
     if (err) throw new Error(`Could not read dist directory: ${err}`);
