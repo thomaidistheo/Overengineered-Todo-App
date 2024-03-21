@@ -3,17 +3,19 @@
 _DONE is a todo app created to mainly practice `React` and `Typescript` but also integrations such as a `Weather API` and `Firebase Firestore`._
 
 
-`🛠️ Current version: v0.7`
+`🛠️ Current version: v1.0 🎉`
 ## Screenshots
-<img src="https://github.com/thomaidistheo/Overengineered-Todo-App/blob/main/src/assets/scene%2030-1.jpg?raw=true"/><br><br><br>
-## Core Functionalities (v1)
-* Sign up / Login / Delete Account
-* Add items as TODOs
-* Mark items:
-    * DONE
-    * Flagged
-    * Urgency: level 1-3
-* Select Theme (at least 2: dark or light mode)
+<img src="https://github.com/thomaidistheo/Overengineered-Todo-App/blob/main/src/assets/scene%2030-1.jpg?raw=true"/><br/><br/><br/>
+
+## Core Functionalities (v1.0) - 🔴 LIVE
+* Sign up / Login / Delete Account 
+* Add items as TODOs 
+* Mark items: 
+    * DONE 
+    * Flagged 
+    * Urgency: level 1-3 
+* Select Theme (at least 2: dark or light mode) 
+* Weather Display 
 <br><br><br>
 
 ## Future Functionalities (v1.5)
