@@ -10,6 +10,7 @@ _DONE is a todo app created to mainly practice `React` and `Typescript` but also
 ## Core Functionalities (v1.0) - 🔴 LIVE
 * Sign up / Login / Delete Account 
 * Add items as TODOs 
+* Separate DONE items in another tab
 * Mark items: 
     * DONE 
     * Flagged 
@@ -19,7 +20,7 @@ _DONE is a todo app created to mainly practice `React` and `Typescript` but also
 <br><br><br>
 
 ## Future Functionalities (v1.5)
-* Separate DONE items in another tab
+* Better weather icon pack
 * Add more themes
 <br><br><br>
 
