@@ -25,6 +25,14 @@
 
     &.weatherNotVisible {
         padding: 0;
+
+        .error {
+            display: none;
+        }
+    }
+
+    .error {
+        padding-top: 16px;
     }
 
     .weather {

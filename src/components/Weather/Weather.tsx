@@ -52,9 +52,6 @@ const useFetchWeatherData = (query: string) => {
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
     
-    console.log('Fetching data for: ', query)
-    console.log(`https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHERAPI_KEY}&q=${query}&days=5&aqi=no&alerts=no`)
-    
     useEffect(() => {
         const fetchWeather = async () => {
             if (!query) {
@@ -100,7 +97,8 @@ const Weather: React.FC = () => {
             setLocationQuery(`${latitude},${longitude}`);
         }, (err) => {
             console.error(err);
-            setLocationQuery('fallback location'); // Use a fallback location or handle error
+            setLocationQuery('LocationPermissionDenied') // Use a fallback location or handle error
+            setWeatherOpen(false) 
         });
     }, []);
 
@@ -114,8 +112,8 @@ const Weather: React.FC = () => {
             {
                 loading 
                     ? 'Loading...' 
-                    : error ? `${error}`
-                    : (!data) ? 'No data found.'
+                    : error ? <div className={styles.error}>{error}</div>
+                    : !data ? 'No data found.'
                     : weatherOpen && <div className={styles.weather}>
                         <div className={`${styles.today}`}>
                             <WeatherDay 
