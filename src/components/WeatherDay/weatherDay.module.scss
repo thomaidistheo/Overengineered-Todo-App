@@ -3,7 +3,7 @@
 .weatherDayCont {
     color: var(--clrAccent-60);
     width: 52px;
-    font-size: 14px;
+    font-size: 12px;
     @include displayFlex(column, center, center, 2px);
 
     .icon {
@@ -11,6 +11,7 @@
             width: 100%;
             height: auto;
             filter: grayscale(0.6);
+            max-height: 32px;
         }
     }
 }

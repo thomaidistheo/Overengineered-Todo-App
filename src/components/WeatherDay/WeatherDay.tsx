@@ -17,6 +17,9 @@ const WeatherDay: React.FC<WeatherDayProps> = ({ avgtemp_c, dataDate, isToday, c
 
     return (
         <div className={styles.weatherDayCont}>
+            <div className={styles.icon}>
+                <img src={icon} alt={condition} />
+            </div>
             <div className={styles.day}>
                 {
                     isToday
@@ -24,18 +27,7 @@ const WeatherDay: React.FC<WeatherDayProps> = ({ avgtemp_c, dataDate, isToday, c
                         : new Intl.DateTimeFormat('en-US', options).format(date)
                 }
             </div>
-            <div className={styles.icon}>
-                <img src={icon} alt={condition} />
-            </div>
             <div className={styles.temp}>{avgtemp_c}°C</div>
-            {/* <div className={styles.rain}>
-                {
-                    isToday
-                        ? condition
-                        : `${rain_chance}%` 
-                }
-            </div> */}
-
         </div>
     )
 }
