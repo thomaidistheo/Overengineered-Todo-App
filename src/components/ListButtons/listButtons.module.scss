@@ -2,7 +2,7 @@
 
 .listButtonsCont {
     @include displayFlex(row, center, space-between, 16px);
-    padding: 16px 0;
+    padding: 8px 0;
     width: 100%;
     max-width: 520px;
 
