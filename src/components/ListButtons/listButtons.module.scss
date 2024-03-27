@@ -15,15 +15,15 @@
         background-color: transparent;
         width: 50%;
         padding: 12px;
-        color: var(--clrAccent-30);
+        color: var(--clrAccent-60);
         border-radius: $borderRadiusNormal;
         cursor: pointer;
         transition: all 150ms ease-in-out;
 
         &.active {
-            background-color: var(--clrSecondary);
+            background-color: var(--clrTertiary);
             // box-shadow: 0 4px 0 var(--clrTertiary);
-            color: var(--clrAccent-60);
+            color: var(--clrAccent-100);
             font-weight: 600;
             width: 100%;
         }

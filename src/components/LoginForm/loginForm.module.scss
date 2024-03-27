@@ -34,7 +34,7 @@
             .inputCont {
                 @include displayFlex(column, flex-start, center, 16px);
                 width: 100%;
-                color: var(--clrAccent-30);
+                color: var(--clrAccent-100);
                 position: relative;
                 
                 label {
@@ -53,7 +53,7 @@
                     border-radius: $borderRadiusNormal;
                     padding: 16px;
                     outline: none;
-                    color: var(--clrAccent-60);
+                    color: var(--clrAccent-100);
                     font-size: $fontSizeBase;
                 }
             }

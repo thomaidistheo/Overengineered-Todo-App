@@ -5,7 +5,7 @@
     @include displayFlex(column, center, space-evenly, 16px);
     width: 100%;
     max-width: 520px;
-    color: var(--clrAccent-30);
+    color: var(--clrAccent-60);
     transition: all 200ms ease-in-out;
 
     @media (max-width: $mobile) {
@@ -38,7 +38,7 @@
         @include displayFlex(row, center, space-between, 16px);
         width: 100%;
         max-width: 520px;
-        color: var(--clrAccent-30);
+        color: var(--clrAccent-60);
     }
     
     .today {
@@ -51,7 +51,7 @@
     .weatherBtn {
         background: transparent;
         border: none;
-        color: var(--clrAccent-30);
+        color: var(--clrAccent-60);
         cursor: pointer;
     }
 }

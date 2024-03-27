@@ -2,9 +2,9 @@
 
 .baseBtn {
     width: 100%;
-    color: var(--clrAccent-30);
+    color: var(--clrAccent-60);
     background: transparent;
-    border: 1px solid var(--clrAccent-30);
+    border: 1px solid var(--clrAccent-60);
     border-radius: $borderRadiusNormal;
     padding: 16px 0;
     cursor: pointer;
@@ -32,9 +32,9 @@
 
 .thinBtn {
     width: 100%;
-    color: var(--clrAccent-30);
+    color: var(--clrAccent-60);
     background: transparent;
-    border: 1px solid var(--clrAccent-30);
+    border: 1px solid var(--clrAccent-60);
     border-radius: $borderRadiusNormal;
     padding: 12px 0;
     cursor: pointer;
