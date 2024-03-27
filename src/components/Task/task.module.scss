@@ -30,7 +30,7 @@
             min-height: 18px;
             width: 18px;
             height: 18px;
-            border: 21px solid var(--clrAccent-60);
+            border: 2px solid var(--clrAccent-60);
             border-radius: $borderRadiusSmall;
             cursor: pointer;
             @include displayFlex(row, center, center, 0px);
