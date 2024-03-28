@@ -94,6 +94,8 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         try {
             const userDocRef = doc(db, "Users", user.uid)
             const docSnap = await getDoc(userDocRef)
+            setDescription('')
+            
             if (docSnap.exists()) {
                 if (!docSnap.data().taskCount) {
                     await updateDoc(userDocRef, {
@@ -212,8 +214,8 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
             setDescriptionError('')
         }
 
-        await addSubTask(db, user, taskId, subTaskDescription);
         setSubTaskDescription('')
+        await addSubTask(db, user, taskId, subTaskDescription);
     }
 
     const handleSubTaskComplete = async (taskId: string, subTaskId: string, completed: boolean) => {

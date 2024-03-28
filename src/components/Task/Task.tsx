@@ -74,6 +74,11 @@ const Task: React.FC<TaskProps> = ({
         onUrgencyChange(task.id, option); 
     }
 
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        handleAddSubTask()
+    }
+
     return (
         <li className={styles.taskItem} >
             <div className={styles.taskTime}>{task.timestamp.toDate().toLocaleString()}</div>
@@ -133,7 +138,7 @@ const Task: React.FC<TaskProps> = ({
             )}
 
             {showSubTaskInput && (
-                <div className={styles.subTaskInputCont}>
+                <form className={styles.subTaskInputCont} onSubmit={handleSubmit}>
                     <input 
                         type="text" 
                         value={subTaskDescription} 
@@ -141,13 +146,13 @@ const Task: React.FC<TaskProps> = ({
                         placeholder="Add a new sub-task"
                         className={styles.subTaskInput}
                     />
-                    <button onClick={handleAddSubTask}>
+                    <button type="button" onClick={handleAddSubTask}>
                         <IconReturnArrow 
                             height="24"
                             width="24"
                         />
                     </button>
-                </div>
+                </form>
             )}
 
             <div className={styles.inputToggle} onClick={() => setShowSubTaskInput(!showSubTaskInput)}>

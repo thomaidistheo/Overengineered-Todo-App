@@ -46,6 +46,12 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
         }
         setDescription(e.currentTarget.value)
     }
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        handleAddTask()
+    }
+
     
     return (
         <>
@@ -58,8 +64,8 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
             />
             <div className={`${styles.inputComponent} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
                 {(descriptionError && <div className={styles.inputError}>{descriptionError}</div>)}
-                <div className={styles.inputTaskCont}>
-                    <button className={styles.inputBtn} onClick={() => setOpenMenu(!openMenu)}>
+                <form className={styles.inputTaskCont} onSubmit={handleSubmit}>
+                    <button type="button" className={styles.inputBtn} onClick={() => setOpenMenu(!openMenu)}>
                         {openMenu 
                             ? <IconArrowDown 
                                 height="24"
@@ -80,14 +86,14 @@ const InputTask: React.FC<InputTaskProps> = ({ description, setDescription, desc
                         onChange={handleInput}
                         placeholder="Add a new task"
                     />
-                    <button className={styles.inputBtn} onClick={handleAddTask}>
+                    <button type="button" className={styles.inputBtn} onClick={handleAddTask}>
                         <IconReturnArrow
                             height="24"
                             width="24"
                             // color="#000"
                         />
                     </button>
-                </div>
+                </form>
                 {openMenu && <div className={`${styles.menuCont} ${openMenu ? styles.openMenu : styles.closeMenu}`}>
                     <div className={styles.themeSelectCont}>
                         <div className={styles.title}>Theme</div>
