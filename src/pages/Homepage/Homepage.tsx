@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom'
 import { Firestore, collection, query, onSnapshot, getFirestore, Timestamp, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useAuth } from '../../AuthContext'
 import TaskList from '../../components/TaskList/TaskList'
@@ -9,7 +9,7 @@ import ListButtons from '../../components/ListButtons/ListButtons'
 import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'
 import Loader from '../../components/Loader/Loader'
 
-import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency } from '../../dbOperations'
+import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency, addSubTask, toggleSubTaskComplete, deleteSubTask } from '../../dbOperations'
 
 import styles from './homepage.module.scss'
 import Weather from '../../components/Weather/Weather'
@@ -31,14 +31,20 @@ interface HomepageProps {
 
 const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     const { user } = useAuth()
+
     const [tasks, setTasks] = useState<Task[]>([])
     const [description, setDescription] = useState("")
+    const [subTaskDescription, setSubTaskDescription] = useState('');
     const [descriptionError, setDescriptionError] = useState("")
+
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
     const [modalTitle, setModalTitle] = useState<string>("")
+
+    const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
     const [modalDescription, setModalDescription] = useState<string>("")
+
     const [isLoading, setIsLoading] = useState<boolean>(true)
+
     const [activeList, setActiveList] = useState<'TODO' | 'DONE'>('TODO')
 
     const navigate = useNavigate()
@@ -56,8 +62,9 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                         flag: data.flag,
                         urgency: data.urgency,
                         timestamp: data.timestamp,
-                        } as Task
-                    })
+                        subtasks: data.subtasks
+                    } as Task
+                })
                 setTasks(tasksArray)
                 setIsLoading(false)
             })
@@ -144,7 +151,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
         setModalDescription('Are you sure you want to delete this item?')
         setIsModalOpen(true)
     }
-    
+
     const cancelDeleteTask = () => {
         setIsModalOpen(false)
     }
@@ -154,8 +161,8 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
             console.log('User is not authenticated')
             navigate('/login')
             return
-        } 
-        
+        }
+
         try {
             await toggleComplete(db, user, taskId, completed)
         } catch (error) {
@@ -170,7 +177,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
             return
         }
 
-        try { 
+        try {
             await toggleFlag(db, user, taskId, flag)
         } catch (error) {
             console.log('Error modifying flag state of task: ', error)
@@ -184,10 +191,56 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
             return
         }
 
-        try { 
+        try {
             await changeUrgency(db, user, taskId, newUrgency)
         } catch (error) {
             console.log('Error modifying flag state of task: ', error)
+        }
+    }
+
+    const handleAddSubTask = async (taskId: string) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        }
+
+        if (subTaskDescription.trim() === '') {
+            setDescriptionError("Task can't be empty")
+            return
+        } else {
+            setDescriptionError('')
+        }
+
+        await addSubTask(db, user, taskId, subTaskDescription);
+        setSubTaskDescription('')
+    }
+
+    const handleSubTaskComplete = async (taskId: string, subTaskId: string, completed: boolean) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        }
+
+        try {
+            await toggleSubTaskComplete(db, user, taskId, subTaskId, !completed)
+        } catch (error) {
+            console.error('Error modifying completion state of subtask:', error)
+        }
+    }
+
+    const handleDeleteSubTask = async (taskId: string, subTaskId: string) => {
+        if (!user) {
+            console.log('User is not authenticated')
+            navigate('/login')
+            return
+        }
+
+        try {
+            await deleteSubTask(db, user, taskId, subTaskId)
+        } catch (error) {
+            console.error('Error deleting subtask: ', error)
         }
     }
 
@@ -195,7 +248,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
     const compare = (a: Task, b: Task) => {
         if (a.timestamp.toDate().toLocaleString() < b.timestamp.toDate().toLocaleString()) {
             return 1
-        }         
+        }
         if (a.timestamp.toDate().toLocaleString() > b.timestamp.toDate().toLocaleString()) {
             return -1
         }
@@ -205,41 +258,49 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
 
     return (
         <>
-        {isLoading 
-        ? <Loader />
-        : <div className={styles.homepage}>
-            <ConfirmationModal
-                isOpen={isModalOpen}
-                onConfirm={confirmDeleteTask}
-                onCancel={cancelDeleteTask}
-                modalTitle={modalTitle}
-                modalDescription={modalDescription}
-            />
-            <Weather />
-            <ListButtons
-                activeList={activeList}
-                onActiveListChange={handleActiveListChange}
-            />
-            <TaskList
-                tasks={tasks}
-                onToggleComplete={handleComplete}
-                onToggleFlag={handleFlag}
-                onUrgencyChange={handleChangeUrgency}
-                onDeleteTask={handleDeleteTask}
-                activeList={activeList}
-            />
-            <InputTask 
-                description={description}
-                setDescription={setDescription}
-                descriptionError={descriptionError}
-                setDescriptionError={setDescriptionError}
-                handleAddTask={handleAddTask}
-                handleThemeChange={handleThemeChange}
-            />
-        </div>
+            {isLoading
+                ? <Loader />
+                : <div className={styles.homepage}>
+                    <ConfirmationModal
+                        isOpen={isModalOpen}
+                        onConfirm={confirmDeleteTask}
+                        onCancel={cancelDeleteTask}
+                        modalTitle={modalTitle}
+                        modalDescription={modalDescription}
+                    />
+                    <Weather />
+                    <ListButtons
+                        activeList={activeList}
+                        onActiveListChange={handleActiveListChange}
+                    />
+                    <TaskList
+                        tasks={tasks}
+                        onToggleComplete={handleComplete}
+                        onToggleFlag={handleFlag}
+                        onUrgencyChange={handleChangeUrgency}
+                        onDeleteTask={handleDeleteTask}
+                        activeList={activeList}
+
+                        handleAddSubTask={(taskId: string) => handleAddSubTask(taskId)}
+                        setSubTaskDescription={setSubTaskDescription}
+                        subTaskDescription={subTaskDescription}
+
+                        onToggleSubTaskComplete={handleSubTaskComplete}
+                        onDeleteSubTask={handleDeleteSubTask}
+                    />
+                    <InputTask
+                        handleAddTask={handleAddTask}
+                        setDescription={setDescription}
+                        description={description}
+
+                        descriptionError={descriptionError}
+                        setDescriptionError={setDescriptionError}
+                        handleThemeChange={handleThemeChange}
+                    />
+                </div>
             }
         </>
-        
+
     )
 }
 

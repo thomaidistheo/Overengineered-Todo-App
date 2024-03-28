@@ -96,4 +96,53 @@
             }
         }
     }
+
+    .subTaskInputCont {
+        width: 100%;
+        @include displayFlex(row, center, center, 8px);
+        padding: 8px 0;
+
+        .subTaskInput {
+            width: 100%;
+            background-color: var(--clrPrimary);
+            border: none;
+            padding: 12px 8px;
+            font-size: 16px;
+            border-radius: $borderRadiusSmall;
+            outline: none;
+        }
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: $borderRadiusSmall;
+            padding: 4px;
+
+            svg {
+                color: var(--clrAccent-30);
+            }
+        }
+    }
+
+    .inputToggle {
+        width: 100%;
+        @include displayFlex(row, center, center, 0);
+        padding: 4px 0;
+        cursor: pointer;
+
+        .toggle {
+            width: 64px;
+            height: 2px; 
+            border-radius: 50%;
+            background-color: var(--clrAccent-30);
+            transition: all 200ms ease-in-out;
+        }
+
+        &:hover {
+            .toggle {
+                width: 50%;
+            }
+        }
+    }
 }

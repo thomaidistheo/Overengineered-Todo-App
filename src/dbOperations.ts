@@ -63,3 +63,32 @@ export const changeUrgency = async(db: Firestore, user: { uid: string }, taskId:
         urgency: newUrgency
     })
 }
+
+// -----------------------
+// SubTasks
+// -----------------------
+
+// Add SubTask
+export const addSubTask = async (db: Firestore, user: { uid: string }, taskId: string, description: string) => {
+    console.log('addSubTask run: ', taskId, description)
+    const subTaskCollectionRef = collection(db, "Users", user.uid, "Tasks", taskId, "Subtasks")
+    await addDoc(subTaskCollectionRef, {
+        description,
+        completed: false,
+        timestamp: new Date(),
+    })
+}
+
+// Delete SubTask
+export const deleteSubTask = async (db: Firestore, user: { uid: string }, taskId: string, subTaskId: string) => {
+    const subTaskDocRef = doc(db, "Users", user.uid, "Tasks", taskId, "Subtasks", subTaskId)
+    await deleteDoc(subTaskDocRef)
+}
+
+// Toggle SubTask Completion
+export const toggleSubTaskComplete = async (db: Firestore, user: { uid: string }, taskId: string, subTaskId: string, completed: boolean) => {
+    const subTaskDocRef = doc(db, "Users", user.uid, "Tasks", taskId, "Subtasks", subTaskId)
+    await updateDoc(subTaskDocRef, {
+        completed: !completed
+    })
+}
