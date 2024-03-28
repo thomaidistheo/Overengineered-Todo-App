@@ -3,7 +3,7 @@
 
 .inputComponent {
     @include displayFlex(column, center, center, 16px);
-    position: fixed;
+    // position: fixed;
     bottom: 0;
     width: 100%;
     max-width: 520px;
@@ -12,6 +12,7 @@
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
     box-shadow: 0 -4px 0 var(--clrTertiary);
     border: 1px solid var(--clrTertiary);
+    margin-top: calc(16px + 4px); // compensate for box-shadow height
 
     @media (max-width: $mobile) {
         padding-bottom: 32px;

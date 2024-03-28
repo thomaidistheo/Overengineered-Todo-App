@@ -2,12 +2,12 @@
 
 .listButtonsCont {
     @include displayFlex(row, center, space-between, 16px);
-    padding: 8px 0;
     width: 100%;
     max-width: 520px;
+    margin-top: 16px;
 
     @media (max-width: $mobile) {
-        padding: 4px 4px;
+        padding: 0px 4px;
     }
 
     .listButton {

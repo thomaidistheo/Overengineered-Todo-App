@@ -12,7 +12,7 @@ import Loader from '../../components/Loader/Loader'
 import { addTask, deleteTask, toggleComplete, toggleFlag, changeUrgency, addSubTask, toggleSubTaskComplete, deleteSubTask } from '../../dbOperations'
 
 import styles from './homepage.module.scss'
-import Weather from '../../components/Weather/Weather'
+// import Weather from '../../components/Weather/Weather
 
 const db: Firestore = getFirestore()
 
@@ -268,11 +268,7 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
                         modalTitle={modalTitle}
                         modalDescription={modalDescription}
                     />
-                    <Weather />
-                    <ListButtons
-                        activeList={activeList}
-                        onActiveListChange={handleActiveListChange}
-                    />
+                    {/* <Weather /> */}
                     <TaskList
                         tasks={tasks}
                         onToggleComplete={handleComplete}
@@ -287,6 +283,10 @@ const Homepage: React.FC<HomepageProps> = ({ handleThemeChange }) => {
 
                         onToggleSubTaskComplete={handleSubTaskComplete}
                         onDeleteSubTask={handleDeleteSubTask}
+                    />
+                    <ListButtons
+                        activeList={activeList}
+                        onActiveListChange={handleActiveListChange}
                     />
                     <InputTask
                         handleAddTask={handleAddTask}
