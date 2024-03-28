@@ -1,0 +1,59 @@
+@import '../../styles/imports';
+
+.subTaskList {
+    list-style-type: none;
+    width: 100%;
+    @include displayFlex(column, flex-start, center, 8px);
+    background-color: var(--clrPrimary);
+    border-radius: $borderRadiusNormal;
+    padding: 4px 16px;
+
+    li {
+        @include displayFlex(row, center, space-between, 4px);
+        width: 100%;
+        position: relative;
+        min-height: 28px;
+
+        .info {
+            @include displayFlex(row, center, flex-start, 8px); 
+
+            .taskDescription {
+                color: var(--clrAccent-60);
+            }
+        }
+
+        .completionState {
+            min-width: 18px;
+            min-height: 18px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--clrAccent-30);
+            border-radius: $borderRadiusSmall;
+            cursor: pointer;
+            @include displayFlex(row, center, center, 0px);
+            transition: all 150ms ease-in-out;
+
+            &.completed {
+                background-color: var(--clrAccent-30);
+            }
+        }
+
+        .deleteIcon {
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: $borderRadiusSmall;
+            @include displayFlex(row, center, center, 0px);
+            transition: background-color 150ms ease-in-out;
+            user-select: none;
+            color: var(--clrAccent-60);
+
+            svg {
+                height: 22px;
+                width: 22px;
+                color: var(--clrAccent-30);
+            }
+        }
+    }
+}

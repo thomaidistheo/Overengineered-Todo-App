@@ -1,6 +1,13 @@
-import { Task as TaskType } from '../../types'
+import { useState, useEffect } from 'react'
+import { Task as TaskType, SubTask } from '../../types'
 
 import styles from './task.module.scss';
+import SubTaskList from '../SubtaskList/SubTaskList';
+import { useAuth } from '../../AuthContext';
+import { collection, query, onSnapshot } from 'firebase/firestore';
+
+import { db } from '../../firebase'
+import { IconReturnArrow } from '../Icons';
 
 interface TaskProps {
     task: TaskType
@@ -8,9 +15,50 @@ interface TaskProps {
     onToggleFlag: () => void
     onUrgencyChange: (taskId: string, newUrgency: string) => void
     onDelete: () => void
+    handleAddSubTask: () => void
+    subTaskDescription: string
+    setSubTaskDescription: (description: string) => void
+    onToggleSubTaskComplete: (subTaskId: string, completed: boolean) => void
+    onDeleteSubTask: (subTaskId: string) => void
 }
 
-const Task: React.FC<TaskProps> = ({ task, onToggleComplete, onToggleFlag, onUrgencyChange, onDelete }) => {
+const Task: React.FC<TaskProps> = ({ 
+    task, 
+    onToggleComplete, 
+    onToggleFlag, 
+    onUrgencyChange, 
+    onDelete, 
+    handleAddSubTask, 
+    subTaskDescription, 
+    setSubTaskDescription, 
+    onToggleSubTaskComplete,
+    onDeleteSubTask
+}) => {
+    const [showSubTaskInput, setShowSubTaskInput] = useState(false);
+    const [subTasks, setSubTasks] = useState<SubTask[]>([])
+    const { user } = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            const q = query(collection(db, `Users/${user.uid}/Tasks/${task.id}/Subtasks`));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const loadedSubTasks: SubTask[] = [];
+                querySnapshot.forEach((doc) => {
+                    loadedSubTasks.push({
+                        id: doc.id,
+                        description: doc.data().description,
+                        completed: doc.data().completed,
+                        timestamp: doc.data().timestamp
+                    });
+                });
+                setSubTasks(loadedSubTasks);
+            });
+
+            return () => unsubscribe(); // Detach listener when the component unmounts
+        }
+    }, [user, task.id]);
+
+
     const handleUrgencyOption = (option: string) => {
         if (option == 'Low') {
             option = 'Medium'
@@ -27,10 +75,11 @@ const Task: React.FC<TaskProps> = ({ task, onToggleComplete, onToggleFlag, onUrg
     }
 
     return (
-        <li className={styles.taskItem}>
+        <li className={styles.taskItem} >
             <div className={styles.taskTime}>{task.timestamp.toDate().toLocaleString()}</div>
             <div className={styles.task}>
                 <div className={`${styles.completionState} ${task.completed ? styles.completed : ''}`} onClick={onToggleComplete}>
+
                     {task.completed 
                         ? <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path 
@@ -42,7 +91,13 @@ const Task: React.FC<TaskProps> = ({ task, onToggleComplete, onToggleFlag, onUrg
                         : ''
                     }
                 </div>
-                <div className={`${styles.taskDescription} ${task.completed ? styles.completed : ''}`} lang='en'>{task.description}</div>
+                <div 
+                    className={`${styles.taskDescription} ${task.completed ? styles.completed : ''}`} 
+                    lang='en' 
+                    onClick={() => setShowSubTaskInput(!showSubTaskInput)}
+                >
+                    {task.description}
+                </div>
                 <div className={styles.taskOptions}>
                     <span className={`${styles.flagIcon} ${task.flag ? styles.flagged : ''}`} onClick={onToggleFlag}>
                         <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -66,6 +121,37 @@ const Task: React.FC<TaskProps> = ({ task, onToggleComplete, onToggleFlag, onUrg
                         </svg>
                     </span>
                 </div>
+            </div>
+            
+            {subTasks.length > 0 && (
+                <SubTaskList 
+                    subTasks={subTasks}
+                    onToggleSubTaskComplete={onToggleSubTaskComplete}
+                    onDeleteSubTask={onDeleteSubTask}
+                    showSubTaskInput={showSubTaskInput}
+                />
+            )}
+
+            {showSubTaskInput && (
+                <div className={styles.subTaskInputCont}>
+                    <input 
+                        type="text" 
+                        value={subTaskDescription} 
+                        onChange={(e) => setSubTaskDescription(e.target.value)} 
+                        placeholder="Add a new sub-task"
+                        className={styles.subTaskInput}
+                    />
+                    <button onClick={handleAddSubTask}>
+                        <IconReturnArrow 
+                            height="24"
+                            width="24"
+                        />
+                    </button>
+                </div>
+            )}
+
+            <div className={styles.inputToggle} onClick={() => setShowSubTaskInput(!showSubTaskInput)}>
+                <div className={styles.toggle}></div>
             </div>
         </li>
     )
