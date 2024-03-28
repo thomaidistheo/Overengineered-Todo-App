@@ -134,7 +134,7 @@
         .toggle {
             width: 64px;
             height: 2px; 
-            border-radius: 50%;
+            border-radius: $borderRadiusNormal;
             background-color: var(--clrAccent-30);
             transition: all 200ms ease-in-out;
         }
