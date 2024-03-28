@@ -50,7 +50,7 @@
             color: var(--clrAccent-100);
     
             &::placeholder {
-                opacity: 0.4;
+                color: var(--clrAccent-60);
             }
     
             &:focus {
@@ -70,7 +70,11 @@
             padding: 4px;
 
             &:hover {
-                background-color: var(--clrTertiary);
+                background-color: var(--clrAccent-60);
+                
+                svg {
+                    color: var(--clrPrimary);
+                }
             }
             
             &:active {
@@ -128,7 +132,7 @@
                 .themeOption {
                     width: calc(50% - 4px);
                     height: 32px;
-                    border: 1px solid var(--clrAccent-30);
+                    border: 1px solid var(--clrSecondary);
                     border-radius: $borderRadiusSmall;
                     cursor: pointer;
 
@@ -146,9 +150,24 @@
                         background: linear-gradient(90deg, rgb(255, 255, 255) 20%, rgb(192, 199, 202, 1) 100%);
                     }
                     
+                    &.pinkMode {
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(90deg, #653765 0%, #DECCCA 100%);
+                    }
+
+                    &.clayMode {
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(90deg, #CAB2A6 0%, #644249 100%);
+                    }
+
+                    &.sweetCreamMode {
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(90deg, #23315C 0%, #F3EEEC 100%);
+                    }
+
                     &.purpleMode {
                         background: rgb(255, 255, 255);
-                        background: linear-gradient(90deg, rgb(197, 83, 193) 20%, rgb(166, 86, 220) 100%);
+                        background: linear-gradient(90deg, #620f49 0%, #6d073c 100%);
                     }
                 }
             }

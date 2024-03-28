@@ -7,7 +7,7 @@ _DONE is a todo app created to mainly practice `React` and `Typescript` but also
 ## Screenshots
 <img src="https://github.com/thomaidistheo/Overengineered-Todo-App/blob/main/src/assets/scene%2030-1.jpg?raw=true"/><br/><br/><br/>
 
-## Core Functionalities (v1.0) - 🔴 LIVE
+## Core Functionalities (v1.0) - ✅
 * Sign up / Login / Delete Account 
 * Add items as TODOs 
 * Separate DONE items in another tab
@@ -19,12 +19,12 @@ _DONE is a todo app created to mainly practice `React` and `Typescript` but also
 * Weather Display 
 <br><br><br>
 
-## Future Functionalities (v1.5)
-* Better weather icon pack
-* Add more themes
+## Future Functionalities (v1.5) - 🔴 LIVE
+* ~~Better weather icon pack~~ (removed weather)
+* Add more themes ✅
 <br><br><br>
 
 ## Future Functionalities (v2)
-* Ability to add sub-tasks for each item
+* Ability to add sub-tasks for each item ✅
 * Explore the idea of having folders or collections of todo items
 <br><br><br>

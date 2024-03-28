@@ -39,15 +39,37 @@ $clrError: red;
     --clrAccent-10: #{$white-10};
 }
 
-.themePurple {
-    --clrPrimary: #9a26ea;
-    --clrSecondary: #45347e;
-    --clrTertiary: #be6aef; 
+.themePink {
+    --clrPrimary: #DECCCA;
+    --clrSecondary: #c9b0ad;
+    --clrTertiary: #ab7eab; 
 
-    --clrAccent-100: #{$black-100};
-    --clrAccent-60: #{$white-60};
-    --clrAccent-30: #{$black-30};
-    --clrAccent-10: #{$black-10};
+    --clrAccent-100: #673567;
+    --clrAccent-60: #673567;
+    --clrAccent-30: #673567;
+    --clrAccent-10: #673567;
+}
+
+.themeClay {
+    --clrPrimary: #433a36;
+    --clrSecondary: #98857c;
+    --clrTertiary: #67574f; 
+
+    --clrAccent-100: #{$white-100};
+    --clrAccent-60: #f8f4f494;
+    --clrAccent-30: #{$white-30};
+    --clrAccent-10: #{$white-10};
+}
+
+.themeSweetCream {
+    --clrPrimary: #233358;
+    --clrSecondary: #F3EEEC;
+    --clrTertiary: #4f6087; 
+
+    --clrAccent-100: #233358;
+    --clrAccent-60: #4f6087;
+    --clrAccent-30: #{$white-30};
+    --clrAccent-10: #{$white-10};
 }
 
 :root {

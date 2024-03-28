@@ -37,7 +37,7 @@
             transition: all 150ms ease-in-out;
 
             &.completed {
-                background-color: var(--clrAccent-30);
+                background-color: var(--clrAccent-60);
             }
         }
 
@@ -111,6 +111,10 @@
             border-radius: $borderRadiusSmall;
             outline: none;
             color: var(--clrAccent-60);
+
+            &::placeholder {
+                color: var(--clrAccent-60);
+            }
         }
 
         button {
