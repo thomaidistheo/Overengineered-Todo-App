@@ -103,7 +103,6 @@ const Weather: React.FC = () => {
     }, []);
 
     const { data, loading, error } = useFetchWeatherData(locationQuery)
-    console.log('locationQuery: ', locationQuery)
 
     const currentDate = new Date().toDateString();
 

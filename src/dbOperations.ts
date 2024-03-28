@@ -23,7 +23,6 @@ export const addTask = async (db: Firestore, user: { uid: string }, description:
         timestamp: new Date(),
         urgency: 'Low'
     })
-    console.log('lol')
 }
 
 // -----------------------
