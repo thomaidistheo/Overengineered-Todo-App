@@ -12,13 +12,19 @@
     @include displayFlex(column, flex-start, center, 4px);
     transition: all 200ms ease-in-out;
 
+    @media (max-width: $mobile) {
+        border-radius: $borderRadiusSmall;
+    }
     &:hover {
-        box-shadow: 0 2px 0 var(--clrTertiary);
+        @media (min-width: $mobile) {
+            box-shadow: 0 2px 0 var(--clrTertiary);
+        }
     }
     
     .taskTime {
         font-size: $fontSizeSmall;
-        opacity: 0.5;
+        color: var(--clrAccent-60);
+        opacity: 0.6;
     }
 
     .task {
@@ -47,6 +53,7 @@
             word-break: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
+            cursor: pointer;
 
             &.completed {
                 text-decoration: line-through;
@@ -146,7 +153,9 @@
 
         &:hover {
             .toggle {
-                width: 50%;
+                @media (min-width: $mobile) {
+                    width: 50%;
+                }
             }
         }
     }

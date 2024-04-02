@@ -25,5 +25,9 @@
 
     .tasks {
         @include displayFlex(column, center, flex-start, 8px);
+
+        @media (max-width: $mobile) {
+            gap: 4px;
+        }
     }
 }

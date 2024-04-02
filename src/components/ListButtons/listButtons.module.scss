@@ -4,10 +4,12 @@
     @include displayFlex(row, center, space-between, 16px);
     width: 100%;
     max-width: 520px;
-    margin-top: 16px;
+    margin: 16px 0 calc(16px + 4px) 0;
 
     @media (max-width: $mobile) {
         padding: 0px 4px;
+        gap: 4px;
+        margin: 8px 0 calc(8px + 4px) 0;
     }
 
     .listButton {
@@ -19,6 +21,10 @@
         border-radius: $borderRadiusNormal;
         cursor: pointer;
         transition: all 150ms ease-in-out;
+
+        @media (max-width: $mobile) {
+            border-radius: $borderRadiusSmall;
+        }
 
         &.active {
             background-color: var(--clrTertiary);

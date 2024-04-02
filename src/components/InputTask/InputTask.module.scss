@@ -12,13 +12,13 @@
     border-radius: $borderRadiusNormal $borderRadiusNormal 0 0;
     box-shadow: 0 -4px 0 var(--clrTertiary);
     border: 1px solid var(--clrTertiary);
-    margin-top: calc(16px + 4px); // compensate for box-shadow height
 
     @media (max-width: $mobile) {
         padding-bottom: 32px;
         border-right: none;
         border-left: none;
         border-bottom: none;
+        border-radius: $borderRadiusSmall $borderRadiusSmall 0 0;
     }
 
     &.openMenu {
@@ -70,11 +70,14 @@
             padding: 4px;
 
             &:hover {
-                background-color: var(--clrAccent-60);
-                
-                svg {
-                    color: var(--clrPrimary);
+                @media (min-width: $mobile){
+                    background-color: var(--clrAccent-60);
+
+                    svg {
+                        color: var(--clrPrimary);
+                    }
                 }
+                
             }
             
             &:active {
