@@ -72,6 +72,17 @@ $clrError: red;
     --clrAccent-10: #{$white-10};
 }
 
+.themeIG {
+    --clrPrimary: #0C0F14;
+    --clrSecondary: #181a1e;
+    --clrTertiary: #28292c; 
+
+    --clrAccent-100: #{$white-100};
+    --clrAccent-60: #{$white-60};
+    --clrAccent-30: #{$white-30};
+    --clrAccent-10: #{$white-10};
+}
+
 :root {
     --clrPrimary: #EFEFEF;
     --clrSecondary: #FFF;
