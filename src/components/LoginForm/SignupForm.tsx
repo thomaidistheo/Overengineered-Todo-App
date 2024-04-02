@@ -23,7 +23,7 @@ const SignUpForm: React.FC = () => {
 
     const validatePassword = (password: string) => {
         const lengthCheck = password.length >= 8
-        const symbolCheck = /[!@#$%^&*(),.?":{}|<>]/g.test(password)
+        const symbolCheck = /[!@#$%^&*(),.?":{}|<>-]/g.test(password)
         const numberCheck = /[0-9]/g.test(password)
         return lengthCheck && symbolCheck && numberCheck
     }
