@@ -135,7 +135,7 @@
                 .themeOption {
                     width: calc(50% - 4px);
                     height: 32px;
-                    border: 1px solid var(--clrSecondary);
+                    border: 1px solid var(--clrAccent-60);
                     border-radius: $borderRadiusSmall;
                     cursor: pointer;
 
@@ -164,7 +164,7 @@
                     }
 
                     &.igMode {
-                        background: #0C0F14;
+                        background: #222529;
                     }
                 }
             }
