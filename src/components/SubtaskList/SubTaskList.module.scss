@@ -5,7 +5,7 @@
     width: 100%;
     @include displayFlex(column, flex-start, center, 8px);
     border-radius: $borderRadiusNormal;
-    padding: 4px 16px;
+    padding: 4px 4px 4px 16px;
 
     li {
         @include displayFlex(row, center, space-between, 4px);
