@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "firebase": "^10.8.1",
+    "gh-pages": "^6.3.0",
     "git-filter-repo": "^0.0.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
