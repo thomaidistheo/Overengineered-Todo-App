@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/scripts/service-worker.js", "src/scripts/update-service-worker.js"],
+  "include": ["src", "public/service-worker.js", "src/scripts/update-service-worker.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
