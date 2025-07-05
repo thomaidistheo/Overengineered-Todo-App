@@ -1,5 +1,6 @@
 import './firebase'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+
 import PageNotFound from './pages/PageNotFound/PageNotFound'
 import Homepage from './pages/Homepage/Homepage'
 import LoginPage from './pages/Login/LoginPage'
