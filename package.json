@@ -1,18 +1,23 @@
 {
   "name": "overengineered-todo-app",
+  "homepage": "https://thomaidistheo.github.io/Overengineered-Todo-App/",
+  "description": "A todo app that is overengineered, built with React, TypeScript, and Firebase.",
+  "author": "Thomaidis Theodoros",
+  "license": "MIT",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "postbuild": "node src/scripts/update-service-worker.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
   },
   "dependencies": {
     "firebase": "^10.8.1",
-    "gh-pages": "^6.3.0",
     "git-filter-repo": "^0.0.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
